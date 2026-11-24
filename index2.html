@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquimia da Cozinha | A Ciência por Trás dos Alimentos</title>
+
+    <!-- Google Fonts & Bootstrap 5.3.3 + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --terracota: #c84b31;
+            --terracota-dark: #9e3620;
+            --salvia: #2d4234;
+            --dourado: #d99b26;
+            --creme: #fbf9f4;
+            --areia: #f2ede2;
+            --texto: #1e201e;
+            --suave: #5f635e;
+            --raio: 18px;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--creme);
+            color: var(--texto);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4, h5, .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Navbar */
+        .navbar-custom {
+            background: rgba(251, 249, 244, 0.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(217, 155, 38, 0.25);
+        }
+        .navbar-brand { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 1.55rem; color: var(--texto) !important; }
+        .navbar-brand span { color: var(--terracota); font-style: italic; }
+        .nav-link { font-weight: 600; color: var(--texto) !important; transition: color .2s; }
+        .nav-link:hover { color: var(--terracota) !important; }
+
+        /* Botões */
+        .btn-terracota {
+            background: var(--terracota); color: #fff; border: none; border-radius: 50px;
+            padding: .58rem 1.35rem; font-weight: 600; transition: all .25s;
+            box-shadow: 0 6px 16px rgba(200, 75, 49, 0.28);
+        }
+        .btn-terracota:hover { background: var(--terracota-dark); color: #fff; transform: translateY(-2px); }
+        .btn-outline-terracota {
+            border: 2px solid var(--terracota); color: var(--terracota); background: transparent;
+            border-radius: 50px; padding: .48rem 1.2rem; font-weight: 600; transition: all .2s;
+        }
+        .btn-outline-terracota:hover, .btn-outline-terracota.active { background: var(--terracota); color: #fff; }
+
+        /* Hero Carousel */
+        .hero-carousel { margin-top: 66px; }
+        .carousel-item { height: 74vh; min-height: 470px; max-height: 680px; position: relative; }
+        .carousel-item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.55); transition: transform 7s ease; }
+        .carousel-item.active img { transform: scale(1.06); }
+        .carousel-overlay {
+            position: absolute; inset: 0; display: flex; align-items: center;
+            background: linear-gradient(90deg, rgba(24,28,25,.88) 0%, rgba(24,28,25,.48) 60%, rgba(24,28,25,.12) 100%);
+        }
+        .hero-badge {
+            background: rgba(217, 155, 38, 0.22); border: 1px solid var(--dourado); color: #fce4b4;
+            padding: .35rem .95rem; border-radius: 50px; font-size: .82rem; font-weight: 600; display: inline-flex; gap: .4rem;
+        }
+        .carousel-title { font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 800; color: #fff; line-height: 1.15; margin: .85rem 0; }
+
+        /* Offcanvas */
+        .offcanvas-custom { background: var(--creme); border-left: 2px solid rgba(217, 155, 38, 0.3); }
+        .glossary-card { background: #fff; border-left: 4px solid var(--dourado); border-radius: 10px; padding: .75rem; box-shadow: 0 3px 10px rgba(0,0,0,.04); }
+        .lab-banner { background: linear-gradient(135deg, var(--salvia), #1a291f); color: #fff; border-radius: var(--raio); padding: 1.15rem; }
+
+        /* Anatomia Molecular */
+        .mol-card {
+            background: #fff; border-radius: var(--raio); border: 1px solid rgba(0,0,0,.06);
+            padding: 1.5rem; height: 100%; transition: all .3s ease; box-shadow: 0 10px 25px rgba(0,0,0,.04);
+        }
+        .mol-card:hover { transform: translateY(-6px); border-color: var(--dourado); box-shadow: 0 16px 32px rgba(45, 66, 52, 0.12); }
+        .mol-icon {
+            width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center;
+            font-size: 1.5rem; margin-bottom: 1rem;
+        }
+
+        /* Laboratório Interativo */
+        .lab-section { background-color: var(--areia); border-top: 1px solid rgba(217,155,38,.2); border-bottom: 1px solid rgba(217,155,38,.2); }
+        .agent-btn {
+            border-radius: 50px; padding: .55rem 1.25rem; font-weight: 600; border: 1px solid rgba(30,32,30,.15);
+            background: #fff; color: var(--texto); transition: all .22s; display: inline-flex; align-items: center; gap: .45rem;
+        }
+        .agent-btn:hover { border-color: var(--terracota); color: var(--terracota); }
+        .agent-btn.active { background: var(--salvia); border-color: var(--salvia); color: #fff; box-shadow: 0 6px 16px rgba(45,66,52,.25); }
+
+        .food-pill {
+            background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 12px; padding: .65rem 1rem;
+            text-align: left; font-weight: 600; transition: all .2s; cursor: pointer;
+        }
+        .food-pill:hover { border-color: var(--terracota); }
+        .food-pill.active { background: var(--terracota); color: #fff; border-color: var(--terracota); }
+
+        .sense-box {
+            background: #fff; border-radius: 14px; padding: 1.15rem; height: 100%;
+            border-top: 4px solid var(--dourado); box-shadow: 0 6px 18px rgba(0,0,0,.04);
+        }
+
+        /* Cards Antes e Depois */
+        .trans-card {
+            background: #fff; border-radius: var(--raio); overflow: hidden; height: 100%;
+            box-shadow: 0 12px 28px rgba(0,0,0,.06); transition: all .3s ease; display: flex; flex-direction: column;
+        }
+        .trans-card:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(200,75,49,.14); }
+        .trans-img { position: relative; height: 210px; overflow: hidden; }
+        .trans-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+        .trans-card:hover .trans-img img { transform: scale(1.06); }
+        .agent-badge {
+            position: absolute; top: 12px; left: 12px; background: rgba(45, 66, 52, 0.88); backdrop-filter: blur(4px);
+            color: #fff; font-size: .75rem; font-weight: 600; padding: .3rem .8rem; border-radius: 50px;
+        }
+        .btn-note {
+            position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,.92); border: none; display: grid; place-items: center;
+            color: var(--texto); box-shadow: 0 4px 10px rgba(0,0,0,.12); transition: transform .2s;
+        }
+        .btn-note.saved { background: var(--dourado); color: #fff; }
+        .before-after-box { background: var(--creme); border-radius: 12px; padding: .75rem; font-size: .85rem; }
+
+        /* Modal & Footer */
+        .modal-custom { border-radius: 20px; border: none; overflow: hidden; background: var(--creme); }
+        .modal-cover { height: 230px; width: 100%; object-fit: cover; }
+        footer { background: #181c19; color: #d8d4ca; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <i class="bi bi-flask text-danger"></i> Alquimia <span>da</span> Cozinha
+            </a>
+            <div class="d-flex align-items-center gap-2 order-lg-3">
+                <button class="btn btn-terracota d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#labOffcanvas">
+                    <i class="bi bi-journal-text"></i>
+                    <span class="d-none d-sm-inline">Glossário & Caderno</span>
+                    <span id="savedCount" class="badge rounded-pill bg-warning text-dark">0</span>
+                </button>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse order-lg-2" id="navMenu">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#anatomia">Anatomia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#laboratorio">Laboratório</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#transformacoes">Antes & Depois</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- OFFCANVAS: GLOSSÁRIO QUÍMICO & CADERNO -->
+    <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="labOffcanvas">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold fs-4"><i class="bi bi-atom text-warning me-1"></i> Enciclopédia & Notas</h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column gap-4">
+            <div class="lab-banner">
+                <span class="badge bg-warning text-dark mb-1">Ciência Gastronômica</span>
+                <h6 class="fw-bold mb-1">A Cozinha é um Laboratório Vivo</h6>
+                <p class="small text-white-50 mb-0">Cada técnica culinária reorganiza moléculas de água, proteínas, açúcares e gorduras.</p>
+            </div>
+
+            <div>
+                <h6 class="fw-bold text-uppercase small text-muted mb-2">Glossário de Reações</h6>
+                <div class="d-flex flex-column gap-2">
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Reação de Maillard (140°C+)</strong>
+                        <small class="text-muted">Reação entre aminoácidos e açúcares redutores que cria crosta dourada e centenas de aromas tostados.</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Caramelização (160°C+)</strong>
+                        <small class="text-muted">Pirólise pura dos açúcares sem proteínas, gerando notas de nozes, amargor equilibrado e cor âmbar.</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Desnaturação & Coagulação</strong>
+                        <small class="text-muted">Calor ou ácidos desenrolam proteínas espiraladas, que se religam formando redes firmes (ex: ovo cozido).</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Gelatinização do Amido</strong>
+                        <small class="text-muted">Grânulos de amido absorvem água quente, incham e espessam molhos, pães e cremes.</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Fermentação Microbiana</strong>
+                        <small class="text-muted">Leveduras e bactérias convertem açúcares em gás CO₂, ácidos orgânicos e álcoois aromáticos.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="fw-bold text-uppercase small text-muted mb-0">Estudos Salvos no Caderno</h6>
+                    <button id="clearNotesBtn" class="btn btn-sm btn-link text-danger text-decoration-none p-0 d-none" onclick="limparNotas()">Limpar</button>
+                </div>
+                <div id="notesList" class="d-flex flex-column gap-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARROSSEL HERO -->
+    <section id="inicio" class="hero-carousel">
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5500">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=85" alt="Estrutura Molecular">
+                    <div class="carousel-overlay"><div class="container">
+                        <span class="hero-badge"><i class="bi bi-droplet-half"></i> Pilar 01 • Composição</span>
+                        <h1 class="carousel-title">A Arquitetura Invisível<br>dos Ingredientes</h1>
+                        <p class="text-white-50 lead mb-4 col-lg-6">Descubra como água, proteínas, carboidratos e lipídios se organizam dentro de cada alimento antes mesmo de tocar a panela.</p>
+                        <a href="#anatomia" class="btn btn-terracota btn-lg"><i class="bi bi-arrow-down-circle me-2"></i>Explorar Moléculas</a>
+                    </div></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=85" alt="Calor e Reação de Maillard">
+                    <div class="carousel-overlay"><div class="container">
+                        <span class="hero-badge"><i class="bi bi-fire"></i> Pilar 02 • Energia & Reações</span>
+                        <h2 class="carousel-title">Calor, Frio, Água, Ácidos<br>& Microrganismos</h2>
+                        <p class="text-white-50 lead mb-4 col-lg-6">Cinco forças fundamentais capazes de transformar moléculas inertes em explosões de cor, aroma, sabor e textura.</p>
+                        <a href="#laboratorio" class="btn btn-terracota btn-lg"><i class="bi bi-sliders me-2"></i>Abrir Laboratório</a>
+                    </div></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=85" alt="Fermentação e Pão">
+                    <div class="carousel-overlay"><div class="container">
+                        <span class="hero-badge"><i class="bi bi-stars"></i> Pilar 03 • Metamorfose Sensorial</span>
+                        <h2 class="carousel-title">Do Alimento Cru à<br>Obra-Prima Sensorial</h2>
+                        <p class="text-white-50 lead mb-4 col-lg-6">Compare o antes e o depois de cada transformação e entenda a ciência por trás de cada mordida.</p>
+                        <a href="#transformacoes" class="btn btn-terracota btn-lg"><i class="bi bi-eye me-2"></i>Ver Transformações</a>
+                    </div></div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 1: ANATOMIA DOS INGREDIENTES -->
+    <section id="anatomia" class="py-5">
+        <div class="container">
+            <div class="text-center max-w-2xl mx-auto mb-5">
+                <span class="text-uppercase fw-bold small" style="color:var(--terracota);letter-spacing:1.5px">Fundamentos Moleculares</span>
+                <h2 class="display-5 fw-bold">Anatomia dos Ingredientes</h2>
+                <p class="text-muted col-lg-7 mx-auto">Todo ingrediente na cozinha é formado por cinco blocos construtores. Entender como eles se comportam revela o segredo de qualquer preparo.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="mol-card">
+                        <div class="mol-icon bg-info bg-opacity-10 text-info"><i class="bi bi-droplet-fill"></i></div>
+                        <h4 class="fw-bold">Água (H₂O)</h4>
+                        <p class="small text-muted">Representa de 60% a 95% dos alimentos frescos. Atua como solvente universal, meio de transferência de calor e regulador de suculência.</p>
+                        <span class="badge bg-light text-dark border">Ponto de ebulição: 100°C</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="mol-card">
+                        <div class="mol-icon bg-danger bg-opacity-10 text-danger"><i class="bi bi-diagram-3-fill"></i></div>
+                        <h4 class="fw-bold">Proteínas</h4>
+                        <p class="small text-muted">Longas cadeias dobradas de aminoácidos. Ao receberem calor ou ácido, desenrolam (desnaturam) e criam estruturas firmes ou redes de glúten.</p>
+                        <span class="badge bg-light text-dark border">Base da Reação de Maillard</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="mol-card">
+                        <div class="mol-icon bg-warning bg-opacity-10 text-warning"><i class="bi bi-hexagon-fill"></i></div>
+                        <h4 class="fw-bold">Carboidratos</h4>
+                        <p class="small text-muted">Dividem-se em açúcares simples (doçura e caramelização), amidos (gelatinização e espessamento) e fibras vegetais (parede celular crocante).</p>
+                        <span class="badge bg-light text-dark border">Energia & Estrutura</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="mol-card">
+                        <div class="mol-icon bg-success bg-opacity-10 text-success"><i class="bi bi-brightness-alt-high-fill"></i></div>
+                        <h4 class="fw-bold">Lipídios & Aromas</h4>
+                        <p class="small text-muted">Gorduras e óleos conduzem calor acima de 180°C, lubrificam o paladar e dissolvem compostos aromáticos voláteis responsáveis pelo perfume.</p>
+                        <span class="badge bg-light text-dark border">Veículo de Sabor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 2: LABORATÓRIO INTERATIVO DE TRANSFORMAÇÕES -->
+    <section id="laboratorio" class="lab-section py-5">
+        <div class="container">
+            <div class="mb-4">
+                <span class="text-uppercase fw-bold small" style="color:var(--salvia);letter-spacing:1.5px">Simulador Sensorial</span>
+                <h2 class="display-5 fw-bold">Laboratório de Transformações</h2>
+                <p class="text-muted">Escolha um <strong>Agente de Transformação</strong> e um <strong>Alimento</strong> para observar como as 4 dimensões sensoriais são alteradas.</p>
+            </div>
+
+            <!-- Botões dos 5 Agentes -->
+            <div class="d-flex flex-wrap gap-2 mb-4" id="agentButtons">
+                <button class="agent-btn active" data-agent="Calor"><i class="bi bi-fire text-danger"></i> Calor</button>
+                <button class="agent-btn" data-agent="Frio"><i class="bi bi-snow text-info"></i> Frio</button>
+                <button class="agent-btn" data-agent="Água"><i class="bi bi-droplet-fill text-primary"></i> Água</button>
+                <button class="agent-btn" data-agent="Ácidos"><i class="bi bi-brightness-low-fill text-warning"></i> Ácidos</button>
+                <button class="agent-btn" data-agent="Microrganismos"><i class="bi bi-virus text-success"></i> Microrganismos</button>
+            </div>
+
+            <div class="row g-4 align-items-stretch">
+                <!-- Lista de Alimentos do Agente -->
+                <div class="col-lg-4">
+                    <div class="bg-white p-4 rounded-4 shadow-sm h-100 d-flex flex-column">
+                        <h5 class="fw-bold mb-1" id="agentTitle">Agente: Calor</h5>
+                        <p class="small text-muted mb-3" id="agentSummary">Energia térmica que acelera moléculas, evapora água e ativa reações químicas de douramento.</p>
+                        <label class="small fw-bold text-uppercase text-muted mb-2">Selecione o Alimento:</label>
+                        <div class="d-flex flex-column gap-2" id="foodSelector"></div>
+                    </div>
+                </div>
+
+                <!-- Painel das 4 Dimensões Sensoriais -->
+                <div class="col-lg-8">
+                    <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm h-100">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 border-bottom pb-3 mb-4">
+                            <div>
+                                <span class="badge bg-danger bg-opacity-10 text-danger mb-1" id="labReactionTag">Reação Química</span>
+                                <h3 class="fw-bold mb-0" id="labFoodHeading">Alimento</h3>
+                            </div>
+                            <span class="badge rounded-pill text-bg-dark px-3 py-2" id="labCondition">Condição</span>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6">
+                                <div class="sense-box" style="border-color:#c84b31">
+                                    <h6 class="fw-bold text-danger"><i class="bi bi-emoji-smile me-1"></i> Sabor</h6>
+                                    <p class="small text-muted mb-0" id="outSabor"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="sense-box" style="border-color:#d99b26">
+                                    <h6 class="fw-bold text-warning"><i class="bi bi-palette-fill me-1"></i> Cor</h6>
+                                    <p class="small text-muted mb-0" id="outCor"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="sense-box" style="border-color:#2d4234">
+                                    <h6 class="fw-bold text-success"><i class="bi bi-wind me-1"></i> Aroma</h6>
+                                    <p class="small text-muted mb-0" id="outAroma"></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="sense-box" style="border-color:#0d6efd">
+                                    <h6 class="fw-bold text-primary"><i class="bi bi-layers-fill me-1"></i> Textura</h6>
+                                    <p class="small text-muted mb-0" id="outTextura"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-3" style="background:var(--creme); border-left:4px solid var(--salvia)">
+                            <strong class="d-block small text-uppercase text-success mb-1"><i class="bi bi-cpu me-1"></i>Explicação Molecular</strong>
+                            <p class="small mb-0" id="outCiencia"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 3: CARDS ANTES & DEPOIS DAS TRANSFORMAÇÕES -->
+    <section id="transformacoes" class="py-5">
+        <div class="container">
+            <div class="row align-items-end mb-4 g-3">
+                <div class="col-lg-7">
+                    <span class="text-uppercase fw-bold small" style="color:var(--terracota);letter-spacing:1.5px">Metamorfose na Prática</span>
+                    <h2 class="display-5 fw-bold mb-0">Antes & Depois dos Alimentos</h2>
+                </div>
+                <div class="col-lg-5 text-lg-end">
+                    <select id="cardFilter" class="form-select rounded-pill shadow-sm d-inline-block w-auto px-4">
+                        <option value="Todos">Todos os Agentes</option>
+                        <option value="Calor">🔥 Calor</option>
+                        <option value="Frio">❄️ Frio</option>
+                        <option value="Água">💧 Água</option>
+                        <option value="Ácidos">🍋 Ácidos</option>
+                        <option value="Microrganismos">🦠 Microrganismos</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-4" id="cardsGrid"></div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer class="py-5 mt-3">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-7">
+                    <h4 class="fw-bold text-white mb-1"><i class="bi bi-flask text-danger me-1"></i> Alquimia <span style="color:var(--dourado);font-style:italic">da</span> Cozinha</h4>
+                    <p class="small text-white-50 mb-0">Explorando a física, a química e a microbiologia por trás da arte culinária.</p>
+                </div>
+                <div class="col-md-5 text-md-end">
+                    <small class="text-white-50">&copy; 2026 Alquimia da Cozinha • Ciência Gastronômica Interativa.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DETALHADO -->
+    <div class="modal fade" id="scienceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-custom shadow-lg">
+                <div class="position-relative">
+                    <img id="mImg" src="" alt="Estudo" class="modal-cover">
+                    <button type="button" class="btn-close bg-white p-2 rounded-circle position-absolute top-0 end-0 m-3 shadow" data-bs-dismiss="modal"></button>
+                    <span id="mBadge" class="agent-badge m-2">Agente</span>
+                </div>
+                <div class="modal-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                        <div>
+                            <span class="small fw-bold text-danger text-uppercase" id="mPhenom">Fenômeno</span>
+                            <h3 id="mTitle" class="fw-bold mb-0">Título</h3>
+                        </div>
+                        <button id="mSaveBtn" class="btn btn-outline-terracota btn-sm"></button>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6"><div class="p-3 rounded-3 bg-white border h-100"><strong class="small text-muted d-block mb-1">ESTADO INICIAL (ANTES)</strong><p class="small mb-0" id="mBefore"></p></div></div>
+                        <div class="col-md-6"><div class="p-3 rounded-3 bg-white border border-warning h-100"><strong class="small text-danger d-block mb-1">ESTADO TRANSFORMADO (DEPOIS)</strong><p class="small mb-0" id="mAfter"></p></div></div>
+                    </div>
+
+                    <h6 class="fw-bold text-uppercase small text-muted mb-2">Etapas da Transformação Molecular</h6>
+                    <div id="mSteps" class="d-flex flex-column gap-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const labData = {
+            "Calor": {
+                resumo: "Energia térmica que acelera moléculas, evapora água superficial e ativa reações de douramento.",
+                alimentos: [
+                    { nome: "🥩 Carne Bovina (Bife)", reacao: "Reação de Maillard", condicao: "150°C – 200°C", sabor: "Desenvolve notas intensas de umami, tostado e leve amargor complexo.", cor: "Passa do vermelho-rubi (mioglobina) para marrom-dourado profundo.", aroma: "Libera pirazinas e furanos — o aroma clássico de churrasco e carne assada.", textura: "Exterior crocante e selado; interior suculento se mantido entre 55°C e 60°C.", ciencia: "Acima de 140°C, aminoácidos das proteínas reagem com açúcares redutores da carne, formando melanoidinas saborosas enquanto as fibras musculares contraem." },
+                    { nome: "🥚 Ovo Inteiro", reacao: "Desnaturação & Coagulação", condicao: "62°C – 85°C", sabor: "Sabor suave e sulfuroso equilibrado (excesso de calor libera H₂S).", cor: "Clara passa de translúcida a branco opaco; gema vai de laranja líquido a amarelo cremoso.", aroma: "Notas delicadas de enxofre e lipídios aquecidos.", textura: "De líquido viscoso para gel elástico e firme.", ciencia: "O calor rompe as ligações fracas que mantêm as proteínas da clara (ovoalbumina) enroladas; elas se esticam e formam uma malha 3D que aprisiona a água." }
+                ]
+            },
+            "Frio": {
+                resumo: "Remoção de calor que desacelera enzimas e microrganismos e cristaliza água e gorduras.",
+                alimentos: [
+                    { nome: "🍨 Calda de Sorvete", reacao: "Cristalização Controlada", condicao: "-18°C com agitação", sabor: "Percepção de doçura reduzida pelo frio exige maior teor de açúcar na base.", cor: "Torna-se mais clara e opaca devido à reflexão da luz nos microcristais e ar.", aroma: "Volatilidade reduzida; aromas são liberados apenas ao derreter na boca.", textura: "Cremosa e aveludada quando congelada rapidamente sob batimento contínuo.", ciencia: "O congelamento rápido com incorporação de ar impede a formação de cristais grandes de gelo, mantendo a gordura emulsificada e a textura macia." },
+                    { nome: "🥔 Batata Cozida Resfriada", reacao: "Retrogradação do Amido", condicao: "4°C por 12 horas", sabor: "Mais neutro e levemente adocicado.", cor: "Superfície ligeiramente mais opaca e firme.", aroma: "Menor liberação de compostos terrosos voláteis.", textura: "Mais firme e estruturada, ideal para saladas sem desmanchar.", ciencia: "Ao esfriar, as cadeias de amilose do amido gelatinizado se realinham em cristais rígidos (amido resistente), aumentando a firmeza." }
+                ]
+            },
+            "Água": {
+                resumo: "Solvente essencial que hidrata proteínas, incha amidos e dissolve sabores e sais.",
+                alimentos: [
+                    { nome: "🍞 Farinha de Trigo + Água", reacao: "Hidratação & Rede de Glúten", condicao: "Hidratação 65% – 75%", sabor: "Ativa enzimas amilases que quebram amido em açúcares levemente doces.", cor: "Passa de pó branco opaco para massa creme elástica e translúcida.", aroma: "Desperta notas frescas de cereal e trigo úmido.", textura: "De pó solto para massa extensível e elástica capaz de reter gás.", ciencia: "A água une as proteínas gliadina e glutenina formando o glúten, enquanto hidrata os grânulos de amido preparando-os para o forno." },
+                    { nome: "🍚 Grão de Arroz", reacao: "Gelatinização do Amido", condicao: "Água a 80°C – 100°C", sabor: "Suave e limpo, pronto para absorver caldos e temperos.", cor: "De branco vítreo e duro para branco translúcido e brilhante.", aroma: "Libera 2-acetil-1-pirrolina, composto floral característico do arroz cozido.", textura: "De rígido e quebradiço para macio e solto.", ciencia: "A água quente penetra nos grânulos de amido, rompendo pontes de hidrogênio e fazendo o grão inchar até três vezes seu volume." }
+                ]
+            },
+            "Ácidos": {
+                resumo: "Doadores de íons H⁺ que cortam gorduras, alteram pigmentos e desnaturam proteínas a frio.",
+                alimentos: [
+                    { nome: "🐟 Peixe Branco (Ceviche)", reacao: "Desnaturação Ácida", condicao: "pH 2.5 (Suco de Limão)", sabor: "Explosão cítrica refrescante que equilibra a doçura natural do peixe.", cor: "Carne translúcida torna-se branco-opaca em poucos minutos.", aroma: "Fresco e marinho, com terpenos cítricos anulando odores de aminas.", textura: "Firme por fora e macia por dentro, simulando um cozimento sem calor.", ciencia: "Os íons de hidrogênio do ácido cítrico alteram as cargas elétricas das proteínas musculares do peixe, coagulando-as a frio." },
+                    { nome: "🥬 Repolho Roxo", reacao: "Indicador Natural de pH", condicao: "Vinagre ou Limão (pH < 4)", sabor: "Acidez vibrante que traz frescor e crocância ao prato.", cor: "Muda instantaneamente de roxo-azulado para vermelho-rubi brilhante.", aroma: "Notas limpas e avinagradas que suavizam compostos sulfurados.", textura: "Mantém a parede celular rígida e crocante.", ciencia: "As antocianinas (pigmentos vegetais) mudam sua estrutura molecular conforme o pH, refletindo luz vermelha em meio ácido." }
+                ]
+            },
+            "Microrganismos": {
+                resumo: "Leveduras e bactérias benéficas que transformam açúcares em ácidos, gases e aromas complexos.",
+                alimentos: [
+                    { nome: "🥛 Leite Integral (Iogurte/Queijo)", reacao: "Fermentação Lática", condicao: "Lactobacillus a 42°C", sabor: "Passa de doce suave para ácido lático refrescante e complexo.", cor: "Branco brilhante e homogêneo.", aroma: "Notas lácteas frescas, amanteigadas (diacetil) e levemente ácidas.", textura: "De líquido fluido para gel cremoso e encorpado.", ciencia: "Bactérias consomem a lactose e produzem ácido lático; a queda do pH faz as proteínas caseínas se unirem em uma rede cremosa." },
+                    { nome: "🥖 Massa Madre (Levain)", reacao: "Fermentação Alcoólica & Lática", condicao: "24°C – 28°C por 12h", sabor: "Acidez equilibrada, profundidade umami e maior digestibilidade.", cor: "Crosta profundamente dourada graças aos açúcares simples disponíveis.", aroma: "Complexo buquê de iogurte, frutas maduras, mel e cereal tostado.", textura: "Miolo aerado com alvéolos irregulares e casca crocante.", ciencia: "Leveduras selvagens produzem gás CO₂ (que infla a rede de glúten) enquanto lactobacilos geram ácidos acético e lático." }
+                ]
+            }
+        };
+
+        const estudos = [
+            {
+                id: 1, titulo: "Bife Selado & Reação de Maillard", agente: "Calor", fenomeno: "Reação de Maillard (140°C+)",
+                img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+                antes: "Carne crua vermelha, fria, macia e com aroma metálico suave.",
+                depois: "Crosta marrom crocante, aroma tostado intenso e interior suculento.",
+                etapas: ["A 100°C a água superficial evapora, permitindo que a temperatura suba.", "Aos 140°C aminoácidos e açúcares se combinam formando centenas de compostos aromáticos.", "A 58°C internos as fibras mantêm os sucos retidos sem ressecar."]
+            },
+            {
+                id: 2, titulo: "Ceviche: Cozimento pelo Ácido", agente: "Ácidos", fenomeno: "Desnaturação Proteica a Frio",
+                img: "https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?auto=format&fit=crop&w=800&q=80",
+                antes: "Filé de peixe translúcido, gelatinoso e de sabor neutro.",
+                depois: "Superfície branca opaca, firmeza delicada e acidez vibrante.",
+                etapas: ["O ácido cítrico do limão reduz o pH da superfície do peixe para cerca de 2,5.", "As cargas elétricas das proteínas se neutralizam e as cadeias se desenrolam.", "As proteínas se religam formando uma malha firme sem uso de fogo."]
+            },
+            {
+                id: 3, titulo: "Pão de Fermentação Natural", agente: "Microrganismos", fenomeno: "Fermentação Mista & Gelatinização",
+                img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+                antes: "Mistura densa e pegajosa de farinha, água e sal.",
+                depois: "Pão leve com alvéolos aerados, aroma complexo e casca âmbar.",
+                etapas: ["Leveduras selvagens fermentam açúcares liberando bolhas de CO₂ presas no glúten.", "Bactérias láticas produzem ácidos orgânicos que criam sabor e conservam o pão.", "No forno, o amido gelatiniza fixando a estrutura aerada."]
+            },
+            {
+                id: 4, titulo: "Risoto & Gelatinização do Amido", agente: "Água", fenomeno: "Hidratação Gradual do Amido",
+                img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=800&q=80",
+                antes: "Grãos de arroz arbóreo secos, duros e opacos.",
+                depois: "Grãos al dente envoltos em emulsão naturalmente cremosa.",
+                etapas: ["A tostagem inicial sela levemente a superfície do grão.", "O caldo quente dissolve a amilopectina externa criando cremosidade sem creme de leite.", "A agitação libera o amido que emulsifica com a manteiga final."]
+            },
+            {
+                id: 5, titulo: "Sorvete Artesanal Cremoso", agente: "Frio", fenomeno: "Nucleação Rápida de Cristais",
+                img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80",
+                antes: "Calda líquida doce e aromática em temperatura ambiente.",
+                depois: "Estrutura aerada, sedosa e estável sem cristais ásperos.",
+                etapas: ["O resfriamento rápido abaixo de -18°C cria milhões de microcristais de gelo.", "O batimento contínuo incorpora microbolhas de ar (overrun).", "Açúcares e gorduras impedem que o gelo se funda em blocos duros."]
+            },
+            {
+                id: 6, titulo: "Caramelo Âmbar Perfumado", agente: "Calor", fenomeno: "Caramelização (Pirólise de Açúcares)",
+                img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80",
+                antes: "Cristais brancos de sacarose pura e doçura linear.",
+                depois: "Líquido dourado-âmbar com notas de nozes, manteiga e leve amargor.",
+                etapas: ["A 160°C a sacarose derrete e se quebra em glicose e frutose.", "As moléculas se fragmentam e recombinam em caramelanos e diacetil.", "O equilíbrio entre doce e amargo atinge o auge por volta de 175°C."]
+            }
+        ];
+
+        let agenteAtivo = "Calor", foodIdx = 0, notasSalvas = JSON.parse(localStorage.getItem("alquimiaNotas")) || [1];
+        const modal = new bootstrap.Modal(document.getElementById("scienceModal"));
+
+        function renderLab() {
+            const data = labData[agenteAtivo];
+            document.getElementById("agentTitle").textContent = `Agente: ${agenteAtivo}`;
+            document.getElementById("agentSummary").textContent = data.resumo;
+
+            document.getElementById("foodSelector").innerHTML = data.alimentos.map((item, idx) => `
+                <button class="food-pill ${idx === foodIdx ? 'active' : ''}" onclick="selectFood(${idx})">${item.nome}</button>
+            `).join("");
+
+            const food = data.alimentos[foodIdx];
+            document.getElementById("labReactionTag").textContent = food.reacao;
+            document.getElementById("labFoodHeading").textContent = food.nome;
+            document.getElementById("labCondition").textContent = food.condicao;
+            document.getElementById("outSabor").textContent = food.sabor;
+            document.getElementById("outCor").textContent = food.cor;
+            document.getElementById("outAroma").textContent = food.aroma;
+            document.getElementById("outTextura").textContent = food.textura;
+            document.getElementById("outCiencia").textContent = food.ciencia;
+        }
+
+        function selectFood(idx) { foodIdx = idx; renderLab(); }
+
+        document.querySelectorAll(".agent-btn").forEach(btn => btn.onclick = () => {
+            document.querySelectorAll(".agent-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            agenteAtivo = btn.dataset.agent;
+            foodIdx = 0;
+            renderLab();
+        });
+
+        function renderCards() {
+            const filtro = document.getElementById("cardFilter").value;
+            const lista = estudos.filter(e => filtro === "Todos" || e.agente === filtro);
+            document.getElementById("cardsGrid").innerHTML = lista.map(e => {
+                const saved = notasSalvas.includes(e.id);
+                return `
+                <div class="col-md-6 col-lg-4">
+                    <article class="trans-card">
+                        <div class="trans-img">
+                            <img src="${e.img}" alt="${e.titulo}">
+                            <span class="agent-badge">${e.agente}</span>
+                            <button class="btn-note ${saved ? 'saved' : ''}" onclick="toggleNota(${e.id}, event)" title="Salvar no caderno">
+                                <i class="bi ${saved ? 'bi-bookmark-fill' : 'bi-bookmark'}"></i>
+                            </button>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <small class="fw-bold text-danger text-uppercase mb-1">${e.fenomeno}</small>
+                            <h3 class="h5 fw-bold mb-3">${e.titulo}</h3>
+                            <div class="before-after-box mb-3 flex-grow-1">
+                                <div class="mb-2"><strong class="text-muted">Antes:</strong> ${e.antes}</div>
+                                <div><strong class="text-success">Depois:</strong> ${e.depois}</div>
+                            </div>
+                            <button class="btn btn-outline-terracota w-100" onclick="abrirEstudo(${e.id})">Analisar Ciência</button>
+                        </div>
+                    </article>
+                </div>`;
+            }).join("");
+        }
+
+        function renderNotas() {
+            document.getElementById("savedCount").textContent = notasSalvas.length;
+            const list = document.getElementById("notesList");
+            document.getElementById("clearNotesBtn").classList.toggle("d-none", !notasSalvas.length);
+            if (!notasSalvas.length) {
+                list.innerHTML = `<div class="p-3 bg-white rounded-3 border small text-muted text-center">Nenhum estudo salvo ainda.</div>`;
+                return;
+            }
+            list.innerHTML = estudos.filter(e => notasSalvas.includes(e.id)).map(e => `
+                <div class="bg-white p-2 rounded-3 border d-flex align-items-center justify-content-between gap-2">
+                    <div class="overflow-hidden" style="cursor:pointer" onclick="abrirEstudo(${e.id})">
+                        <div class="fw-bold small text-truncate">${e.titulo}</div>
+                        <small class="text-muted">${e.agente} • ${e.fenomeno}</small>
+                    </div>
+                    <button class="btn btn-sm text-danger" onclick="toggleNota(${e.id}, event)"><i class="bi bi-trash3"></i></button>
+                </div>`).join("");
+        }
+
+        function toggleNota(id, ev) {
+            if (ev) ev.stopPropagation();
+            notasSalvas = notasSalvas.includes(id) ? notasSalvas.filter(x => x !== id) : [...notasSalvas, id];
+            localStorage.setItem("alquimiaNotas", JSON.stringify(notasSalvas));
+            renderCards(); renderNotas();
+        }
+
+        function limparNotas() {
+            notasSalvas = []; localStorage.setItem("alquimiaNotas", "[]");
+            renderCards(); renderNotas();
+        }
+
+        function abrirEstudo(id) {
+            const e = estudos.find(x => x.id === id);
+            if (!e) return;
+            document.getElementById("mImg").src = e.img;
+            document.getElementById("mBadge").textContent = e.agente;
+            document.getElementById("mPhenom").textContent = e.fenomeno;
+            document.getElementById("mTitle").textContent = e.titulo;
+            document.getElementById("mBefore").textContent = e.antes;
+            document.getElementById("mAfter").textContent = e.depois;
+            document.getElementById("mSteps").innerHTML = e.etapas.map((step, i) => `
+                <div class="p-2 px-3 bg-white rounded-3 border d-flex gap-2 align-items-center small">
+                    <span class="badge rounded-pill bg-danger">${i + 1}</span><span>${step}</span>
+                </div>`).join("");
+
+            const btn = document.getElementById("mSaveBtn");
+            const updateBtn = () => {
+                const s = notasSalvas.includes(id);
+                btn.innerHTML = s ? `<i class="bi bi-bookmark-fill me-1"></i>Salvo` : `<i class="bi bi-bookmark me-1"></i>Salvar Estudo`;
+                btn.classList.toggle("active", s);
+            };
+            updateBtn();
+            btn.onclick = () => { toggleNota(id); updateBtn(); };
+            modal.show();
+        }
+
+        document.getElementById("cardFilter").onchange = renderCards;
+        renderLab(); renderCards(); renderNotas();
+    </script>
+</body>
+</html>

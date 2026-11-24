@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arte No Prato |</title>
+
+    <!-- Google Fonts & Bootstrap 5.3.3 + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <i class="bi bi-fire text-danger"></i> Arte <span>No</span> Prato
+            </a>
+            <div class="d-flex align-items-center gap-2 order-lg-3">
+                <button class="btn btn-terracota d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#chefOffcanvas">
+                    <i class="bi bi-journal-bookmark-fill"></i>
+                    <span class="d-none d-sm-inline">Caderno & Menu</span>
+                    <span id="savedBadge" class="badge rounded-pill bg-warning text-dark">0</span>
+                </button>
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse order-lg-2" id="navMenu">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#receitas">Receitas</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- OFFCANVAS LATERAL -->
+    <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="chefOffcanvas">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold fs-4"><i class="bi bi-stars text-warning me-1"></i> Espaço Gourmet</h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column gap-4">
+            <div class="chef-box shadow-sm">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <img src="imagens/kelwenn.jfif" alt="Kelwenn Guassu" class="rounded-circle object-fit-cover border border-2 border-warning" width="54" height="54">
+                    <div>
+                        <span class="badge bg-warning text-dark mb-1">Chef Executivo</span>
+                        <h6 class="mb-0 fw-bold fs-5">Kelwenn Guassu</h6>
+                        <small class="text-white-50">Cozinha Autoral & Artesanal</small>
+                    </div>
+                </div>
+                <p class="small text-white-50 mb-0">"Cozinhar é transformar ingredientes simples em memórias ao redor da mesa."</p>
+            </div>
+
+            <div>
+                <h6 class="fw-bold text-uppercase small text-muted mb-2">Categorias</h6>
+                <div class="list-group list-group-flush rounded-3 overflow-hidden shadow-sm">
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Todas')"><span>Todas as Receitas</span><span class="badge bg-secondary rounded-pill">6</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Massas')"><span>🍝 Massas</span><span class="badge bg-light text-dark border rounded-pill">2</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Carnes')"><span>🥩 Carnes</span><span class="badge bg-light text-dark border rounded-pill">2</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Sobremesas')"><span>🍰 Sobremesas</span><span class="badge bg-light text-dark border rounded-pill">1</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Vegano')"><span>🌱 Vegano</span><span class="badge bg-light text-dark border rounded-pill">1</span></button>
+                </div>
+            </div>
+
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="fw-bold text-uppercase small text-muted mb-0">Receitas Salvas</h6>
+                    <button id="btnClearSaved" class="btn btn-sm btn-link text-danger text-decoration-none p-0 d-none" onclick="limparSalvas()">Limpar</button>
+                </div>
+                <div id="savedList" class="d-flex flex-column gap-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO CAROUSEL -->
+    <section id="inicio" class="hero-carousel">
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1600&q=85" alt="Massa Artesanal">
+                    <div class="carousel-overlay"><div class="container">
+                        <span class="hero-badge"><i class="bi bi-clock"></i> Massas • 35 min • Destaque</span>
+                        <h1 class="carousel-title">A Arte da Massa Fresca<br>Feita à Mão</h1>
+                        <p class="text-white-50 lead mb-4 col-lg-6">Tagliatelle artesanal ao ragu rústico de tomate San Marzano, azeite extravirgem e manjericão fresco.</p>
+                        <button class="btn btn-terracota btn-lg" onclick="abrirReceita(1)"><i class="bi bi-book-half me-2"></i>Ver Receita</button>
+                    </div></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=85" alt="Entrecôte na Brasa">
+                    <div class="carousel-overlay"><div class="container">
+                        <span class="hero-badge"><i class="bi bi-fire"></i> Carnes • 45 min • Chef Kelwenn Guassu</span>
+                        <h2 class="carousel-title">Cortes Nobres na Brasa<br>com Manteiga de Ervas</h2>
+                        <p class="text-white-50 lead mb-4 col-lg-6">Selagem perfeita em ferro fundido regada com manteiga aromática de alecrim, tomilho e flor de sal.</p>
+                        <button class="btn btn-terracota btn-lg" onclick="abrirReceita(2)"><i class="bi bi-book-half me-2"></i>Ver Receita</button>
+                    </div></div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1600&q=85" alt="Tartelette de Frutas Vermelhas">
+                    <div class="carousel-overlay"><div class="container">
+                        <span class="hero-badge"><i class="bi bi-stars"></i> Sobremesas • 50 min • Confeitaria</span>
+                        <h2 class="carousel-title">Tartelette de Baunilha &<br>Frutas Vermelhas Frescas</h2>
+                        <p class="text-white-50 lead mb-4 col-lg-6">Massa sablée crocante recheada com creme pâtissière de fava de baunilha e frutas silvestres.</p>
+                        <button class="btn btn-terracota btn-lg" onclick="abrirReceita(3)"><i class="bi bi-book-half me-2"></i>Ver Receita</button>
+                    </div></div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+        </div>
+    </section>
+
+    <!-- CATÁLOGO DE RECEITAS -->
+    <section id="receitas" class="py-5">
+        <div class="container">
+            <div class="row align-items-end mb-4 g-3">
+                <div class="col-lg-6">
+                    <span class="text-uppercase fw-bold small" style="color:var(--primaria);letter-spacing:1.5px">Curadoria Gastronômica</span>
+                    <h2 class="display-5 fw-bold mb-0">Nossas Receitas</h2>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group shadow-sm rounded-pill overflow-hidden bg-white border">
+                        <span class="input-group-text bg-white border-0 ps-3 text-muted"><i class="bi bi-search"></i></span>
+                        <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Buscar prato ou ingrediente...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mb-4" id="filterGroup">
+                <button class="filter-pill active" data-cat="Todas">Todas</button>
+                <button class="filter-pill" data-cat="Massas">🍝 Massas</button>
+                <button class="filter-pill" data-cat="Carnes">🥩 Carnes</button>
+                <button class="filter-pill" data-cat="Sobremesas">🍰 Sobremesas</button>
+                <button class="filter-pill" data-cat="Vegano">🌱 Vegano</button>
+            </div>
+
+            <div class="row g-4" id="recipesGrid"></div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer id="rodape" class="py-5 mt-4">
+        <div class="container">
+            <div class="row g-4 pb-4 border-bottom border-secondary border-opacity-25">
+                <div class="col-lg-6">
+                    <a class="navbar-brand text-white d-inline-flex align-items-center gap-2 mb-2" href="#">
+                        <i class="bi bi-fire text-danger"></i> <span class="text-white fst-normal">Arte</span> <span style="color:var(--primaria)">No</span> <span class="text-white fst-normal">Prato</span>
+                    </a>
+                    <p class="text-white-50 mb-0 col-md-9">Inspirando apaixonados pela culinária com receitas testadas, ingredientes frescos e técnicas artesanais.</p>
+                </div>
+                <div class="col-lg-6 text-lg-end d-flex flex-column justify-content-center">
+                    <div class="d-flex gap-2 justify-content-lg-end mb-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE DETALHES DA RECEITA -->
+    <div class="modal fade" id="recipeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-custom shadow-lg">
+                <div class="position-relative">
+                    <img id="mImg" src="" alt="Receita" class="modal-cover">
+                    <button type="button" class="btn-close bg-white p-2 rounded-circle position-absolute top-0 end-0 m-3 shadow" data-bs-dismiss="modal"></button>
+                    <span id="mCat" class="cat-badge m-2">Categoria</span>
+                </div>
+                <div class="modal-body p-4 p-md-5">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+                        <div>
+                            <h3 id="mTitle" class="fw-bold mb-1">Título</h3>
+                            <div class="d-flex gap-3 text-muted small" id="mMeta"></div>
+                        </div>
+                        <button id="mFavBtn" class="btn btn-outline-terracota btn-sm"></button>
+                    </div>
+                    <p id="mDesc" class="text-muted mb-4"></p>
+                    <div class="row g-4">
+                        <div class="col-md-5">
+                            <div class="p-3 rounded-4 bg-white shadow-sm h-100">
+                                <h5 class="fw-bold mb-3 border-bottom pb-2"><i class="bi bi-basket2-fill text-danger me-2"></i>Ingredientes</h5>
+                                <div id="mIngredients" class="d-flex flex-column gap-2 small"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <h5 class="fw-bold mb-3 border-bottom pb-2"><i class="bi bi-list-ol text-danger me-2"></i>Modo de Preparo</h5>
+                            <div id="mSteps" class="d-flex flex-column gap-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const receitas = [
+            {
+                id: 1, titulo: "Tagliatelle ao Ragu Rústico", categoria: "Massas", tempo: "35 min", dificuldade: "Médio", nota: "4.9",
+                img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
+                desc: "Massa fresca envolvida em molho encorpado de tomates pelados italianos, alho confitado, azeite extravirgem e manjericão.",
+                ingredientes: ["400g de tagliatelle fresco artesanal", "2 latas de tomate pelado San Marzano", "4 dentes de alho laminados", "4 colheres (sopa) de azeite extravirgem", "1 maço de manjericão fresco", "80g de Parmigiano-Reggiano ralado"],
+                passos: ["Doure levemente o alho no azeite em fogo baixo.", "Adicione os tomates amassados e apure por 20 minutos.", "Cozinhe a massa al dente em água salgada.", "Misture a massa ao molho com água do cozimento, manjericão e parmesão."]
+            },
+            {
+                id: 2, titulo: "Entrecôte na Brasa com Ervas", categoria: "Carnes", tempo: "45 min", dificuldade: "Médio", nota: "5.0",
+                img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+                desc: "Corte nobre selado em alta temperatura com crosta caramelizada e regado na manteiga aromática de alecrim e tomilho.",
+                ingredientes: ["2 bifes altos de entrecôte (300g cada)", "60g de manteiga gelada", "3 ramos de alecrim e tomilho", "3 dentes de alho amassados", "Flor de sal e pimenta-do-reino"],
+                passos: ["Tempere a carne em temperatura ambiente com sal e pimenta.", "Sele em frigideira de ferro bem quente por 3 minutos de cada lado.", "Abaixe o fogo, junte manteiga, alho e ervas, regando a carne por 1 minuto.", "Descanse a carne por 5 minutos antes de fatiar."]
+            },
+            {
+                id: 3, titulo: "Tartelette de Frutas Vermelhas", categoria: "Sobremesas", tempo: "50 min", dificuldade: "Avançado", nota: "4.9",
+                img: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80",
+                desc: "Massa sablée amanteigada recheada com creme sedoso de baunilha e coroada com amoras, framboesas e mirtilos frescos.",
+                ingredientes: ["200g de farinha de trigo", "100g de manteiga gelada em cubos", "60g de açúcar e 1 gema", "400ml de leite com fava de baunilha", "4 gemas + 80g açúcar + 35g amido", "250g de frutas vermelhas frescas"],
+                passos: ["Faça uma farofa com farinha, açúcar e manteiga, una com a gema e gele 20 min.", "Forre a forma e asse a 180°C por 18 minutos.", "Cozinhe o leite aromatizado com gemas, açúcar e amido até engrossar.", "Recheie a torta fria e decore com as frutas."]
+            },
+            {
+                id: 4, titulo: "Risoto de Cogumelos Selvagens", categoria: "Massas", tempo: "40 min", dificuldade: "Médio", nota: "4.9",
+                img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=800&q=80",
+                desc: "Arroz arbóreo cozido lentamente em caldo aromático, vinho branco seco, mix de cogumelos salteados e parmesão.",
+                ingredientes: ["320g de arroz arbóreo", "300g de cogumelos frescos fatiados", "1,2L de caldo de legumes quente", "120ml de vinho branco seco", "1 cebola picada", "80g de parmesão e 40g de manteiga"],
+                passos: ["Salteie os cogumelos em fogo alto e reserve.", "Refogue a cebola, toste o arroz e deglaceie com vinho branco.", "Adicione o caldo quente aos poucos até o grão ficar al dente.", "Finalize fora do fogo com cogumelos, manteiga gelada e parmesão."]
+            },
+            {
+                id: 5, titulo: "Costela Suína Glaceada ao Mel", categoria: "Carnes", tempo: "1h 40m", dificuldade: "Fácil", nota: "4.8",
+                img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=800&q=80",
+                desc: "Costelinha assada lentamente até desmanchar, pincelada com redução brilhante de mel silvestre, mostarda dijon e páprica.",
+                ingredientes: ["1,2kg de costelinha suína", "3 colheres (sopa) de mel", "2 colheres (sopa) de mostarda dijon", "1 colher (sopa) de páprica defumada", "Suco de 1 laranja, alho, sal e pimenta"],
+                passos: ["Tempere a costela e cubra com papel-alumínio.", "Asse a 180°C por 1 hora e 15 minutos.", "Misture mel e mostarda, pincele a carne e gratine a 220°C por 15 minutos."]
+            },
+            {
+                id: 6, titulo: "Bowl Mediterrâneo de Grão-de-Bico", categoria: "Vegano", tempo: "25 min", dificuldade: "Fácil", nota: "4.8",
+                img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+                desc: "Combinação vibrante de grão-de-bico assado com especiarias, quinoa, abacate, tomate-cereja e molho cremoso de tahine.",
+                ingredientes: ["1 xícara de grão-de-bico cozido", "1 xícara de quinoa cozida", "1 abacate maduro fatiado", "150g de tomates-cereja", "2 colheres (sopa) de tahine e limão", "Azeite, cominho e páprica"],
+                passos: ["Tempere o grão-de-bico com azeite e páprica e asse por 15 minutos até ficar crocante.", "Emulsione o tahine com suco de limão, água morna e sal.", "Monte o bowl com quinoa, vegetais frescos, grão-de-bico e regue com o molho."]
+            }
+        ];
+
+        let catAtual = "Todas", busca = "", salvas = JSON.parse(localStorage.getItem("saborArteSalvas")) || [1];
+        const modal = new bootstrap.Modal(document.getElementById("recipeModal"));
+
+        function renderGrid() {
+            const lista = receitas.filter(r =>
+                (catAtual === "Todas" || r.categoria === catAtual) &&
+                (r.titulo.toLowerCase().includes(busca) || r.desc.toLowerCase().includes(busca))
+            );
+            const grid = document.getElementById("recipesGrid");
+            if (!lista.length) {
+                grid.innerHTML = `<div class="col-12 text-center py-5"><p class="text-muted fs-5">Nenhuma receita encontrada.</p></div>`;
+                return;
+            }
+            grid.innerHTML = lista.map(r => {
+                const fav = salvas.includes(r.id);
+                return `
+                <div class="col-md-6 col-lg-4">
+                    <article class="recipe-card">
+                        <div class="recipe-img-box">
+                            <img src="${r.img}" alt="${r.titulo}">
+                            <span class="cat-badge">${r.categoria}</span>
+                            <button class="btn-fav ${fav ? 'saved' : ''}" onclick="toggleFav(${r.id}, event)" title="Salvar">
+                                <i class="bi ${fav ? 'bi-heart-fill' : 'bi-heart'}"></i>
+                            </button>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex gap-3 small text-muted mb-2">
+                                <span><i class="bi bi-clock text-danger"></i> ${r.tempo}</span>
+                                <span><i class="bi bi-bar-chart text-warning"></i> ${r.dificuldade}</span>
+                                <span class="ms-auto fw-bold text-dark"><i class="bi bi-star-fill text-warning"></i> ${r.nota}</span>
+                            </div>
+                            <h3 class="h5 fw-bold mb-2">${r.titulo}</h3>
+                            <p class="small text-muted flex-grow-1 mb-3">${r.desc}</p>
+                            <button class="btn btn-outline-terracota w-100" onclick="abrirReceita(${r.id})">Ver Detalhes</button>
+                        </div>
+                    </article>
+                </div>`;
+            }).join("");
+        }
+
+        function renderSalvas() {
+            document.getElementById("savedBadge").textContent = salvas.length;
+            const box = document.getElementById("savedList");
+            document.getElementById("btnClearSaved").classList.toggle("d-none", !salvas.length);
+            if (!salvas.length) {
+                box.innerHTML = `<div class="text-center p-3 bg-white rounded-3 border small text-muted">Nenhuma receita salva ainda.</div>`;
+                return;
+            }
+            box.innerHTML = receitas.filter(r => salvas.includes(r.id)).map(r => `
+                <div class="saved-item d-flex align-items-center gap-2 shadow-sm">
+                    <img src="${r.img}" class="rounded-2 object-fit-cover" width="48" height="48">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <div class="fw-bold text-truncate small" style="cursor:pointer" onclick="abrirReceita(${r.id})">${r.titulo}</div>
+                        <small class="text-muted">${r.tempo} • ${r.categoria}</small>
+                    </div>
+                    <button class="btn btn-sm text-danger" onclick="toggleFav(${r.id}, event)"><i class="bi bi-trash3"></i></button>
+                </div>`).join("");
+        }
+
+        function toggleFav(id, e) {
+            if (e) e.stopPropagation();
+            salvas = salvas.includes(id) ? salvas.filter(x => x !== id) : [...salvas, id];
+            localStorage.setItem("saborArteSalvas", JSON.stringify(salvas));
+            renderGrid(); renderSalvas();
+        }
+
+        function limparSalvas() {
+            salvas = []; localStorage.setItem("saborArteSalvas", "[]");
+            renderGrid(); renderSalvas();
+        }
+
+        function abrirReceita(id) {
+            const r = receitas.find(x => x.id === id);
+            if (!r) return;
+            document.getElementById("mImg").src = r.img;
+            document.getElementById("mCat").textContent = r.categoria;
+            document.getElementById("mTitle").textContent = r.titulo;
+            document.getElementById("mMeta").innerHTML = `<span><i class="bi bi-clock text-danger"></i> ${r.tempo}</span><span><i class="bi bi-bar-chart text-warning"></i> ${r.dificuldade}</span>`;
+            document.getElementById("mDesc").textContent = r.desc;
+            document.getElementById("mIngredients").innerHTML = r.ingredientes.map(i => `
+                <label class="d-flex align-items-center gap-2" style="cursor:pointer">
+                    <input type="checkbox" class="form-check-input ing-check m-0"><span>${i}</span>
+                </label>`).join("");
+            document.getElementById("mSteps").innerHTML = r.passos.map((p, idx) => `
+                <div class="d-flex gap-3 align-items-start"><span class="step-num">${idx + 1}</span><p class="mb-0 small">${p}</p></div>`).join("");
+
+            const btn = document.getElementById("mFavBtn");
+            const syncBtn = () => {
+                const s = salvas.includes(id);
+                btn.innerHTML = s ? `<i class="bi bi-heart-fill me-1"></i>Salva` : `<i class="bi bi-heart me-1"></i>Salvar`;
+                btn.classList.toggle("active", s);
+            };
+            syncBtn();
+            btn.onclick = () => { toggleFav(id); syncBtn(); };
+            modal.show();
+        }
+
+        document.querySelectorAll(".filter-pill").forEach(btn => btn.onclick = () => {
+            document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active"); catAtual = btn.dataset.cat; renderGrid();
+        });
+
+        function filtrarOffcanvas(cat) {
+            catAtual = cat;
+            document.querySelectorAll(".filter-pill").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+            renderGrid();
+            bootstrap.Offcanvas.getInstance(document.getElementById("chefOffcanvas"))?.hide();
+            document.getElementById("receitas").scrollIntoView({ behavior: "smooth" });
+        }
+
+        document.getElementById("searchInput").oninput = e => { busca = e.target.value.toLowerCase(); renderGrid(); };
+        renderGrid(); renderSalvas();
+    </script>
+</body>
+</html>

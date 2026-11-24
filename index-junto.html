@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arte No Prato | Gastronomia & Alquimia da Cozinha</title>
+
+    <!-- Google Fonts & Bootstrap 5.3.3 + Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primaria: #c84b31;
+            --terracota: #c84b31;
+            --terracota-dark: #9e3620;
+            --salvia: #2d4234;
+            --dourado: #d99b26;
+            --creme: #fbf9f4;
+            --areia: #f2ede2;
+            --texto: #1e201e;
+            --suave: #5f635e;
+            --raio: 18px;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--creme);
+            color: var(--texto);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navbar & Abas Principais */
+        .navbar-custom {
+            background: rgba(251, 249, 244, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(217, 155, 38, 0.25);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--texto) !important;
+        }
+
+        .navbar-brand span {
+            color: var(--terracota);
+            font-style: italic;
+        }
+
+        .main-tabs {
+            background: var(--areia);
+            padding: 4px;
+            border-radius: 50px;
+            border: 1px solid rgba(217, 155, 38, 0.25);
+        }
+
+        .main-tabs .nav-link {
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--texto) !important;
+            padding: 0.45rem 1.15rem;
+            transition: all 0.25s ease;
+        }
+
+        .main-tabs .nav-link.active {
+            background-color: var(--terracota) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 12px rgba(200, 75, 49, 0.28);
+        }
+
+        .sub-nav-link {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--suave) !important;
+            transition: color 0.2s;
+        }
+
+        .sub-nav-link:hover {
+            color: var(--terracota) !important;
+        }
+
+        /* Botões */
+        .btn-terracota {
+            background: var(--terracota);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: .55rem 1.25rem;
+            font-weight: 600;
+            transition: all .25s;
+            box-shadow: 0 6px 16px rgba(200, 75, 49, 0.28);
+        }
+
+        .btn-terracota:hover {
+            background: var(--terracota-dark);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-terracota {
+            border: 2px solid var(--terracota);
+            color: var(--terracota);
+            background: transparent;
+            border-radius: 50px;
+            padding: .48rem 1.2rem;
+            font-weight: 600;
+            transition: all .2s;
+        }
+
+        .btn-outline-terracota:hover,
+        .btn-outline-terracota.active {
+            background: var(--terracota);
+            color: #fff;
+        }
+
+        /* Hero Carousel */
+        .hero-carousel {
+            margin-top: 66px;
+        }
+
+        .carousel-item {
+            height: 72vh;
+            min-height: 460px;
+            max-height: 660px;
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.55);
+            transition: transform 7s ease;
+        }
+
+        .carousel-item.active img {
+            transform: scale(1.06);
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, rgba(24,28,25,.88) 0%, rgba(24,28,25,.48) 60%, rgba(24,28,25,.12) 100%);
+        }
+
+        .hero-badge {
+            background: rgba(217, 155, 38, 0.22);
+            border: 1px solid var(--dourado);
+            color: #fce4b4;
+            padding: .35rem .95rem;
+            border-radius: 50px;
+            font-size: .82rem;
+            font-weight: 600;
+            display: inline-flex;
+            gap: .4rem;
+        }
+
+        .carousel-title {
+            font-size: clamp(2rem, 4.2vw, 3.4rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.15;
+            margin: .85rem 0;
+        }
+
+        /* Offcanvas */
+        .offcanvas-custom {
+            background: var(--creme);
+            border-left: 2px solid rgba(217, 155, 38, 0.3);
+        }
+
+        .chef-box, .lab-banner {
+            background: linear-gradient(135deg, var(--salvia), #1a291f);
+            color: #fff;
+            border-radius: var(--raio);
+            padding: 1.15rem;
+        }
+
+        .saved-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: .65rem;
+            border: 1px solid rgba(0,0,0,.06);
+        }
+
+        .glossary-card {
+            background: #fff;
+            border-left: 4px solid var(--dourado);
+            border-radius: 10px;
+            padding: .75rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,.04);
+        }
+
+        /* Estilos Exclusivos da Aba 1: Arte No Prato (Receitas) */
+        .filter-pill {
+            border-radius: 50px;
+            padding: .5rem 1.2rem;
+            font-weight: 600;
+            border: 1px solid rgba(30,32,30,.15);
+            background: #fff;
+            color: var(--texto);
+            transition: all .2s;
+        }
+
+        .filter-pill:hover {
+            border-color: var(--terracota);
+            color: var(--terracota);
+        }
+
+        .filter-pill.active {
+            background: var(--terracota);
+            border-color: var(--terracota);
+            color: #fff;
+            box-shadow: 0 6px 14px rgba(200,75,49,.25);
+        }
+
+        .recipe-card, .trans-card {
+            background: #fff;
+            border-radius: var(--raio);
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 12px 28px rgba(0,0,0,.06);
+            transition: all .3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .recipe-card:hover, .trans-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 36px rgba(200,75,49,.14);
+        }
+
+        .recipe-img-box, .trans-img {
+            position: relative;
+            height: 215px;
+            overflow: hidden;
+        }
+
+        .recipe-img-box img, .trans-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .45s ease;
+        }
+
+        .recipe-card:hover .recipe-img-box img,
+        .trans-card:hover .trans-img img {
+            transform: scale(1.06);
+        }
+
+        .cat-badge, .agent-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(45, 66, 52, 0.88);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            font-size: .75rem;
+            font-weight: 600;
+            padding: .3rem .85rem;
+            border-radius: 50px;
+        }
+
+        .btn-fav, .btn-note {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.92);
+            border: none;
+            display: grid;
+            place-items: center;
+            color: var(--texto);
+            box-shadow: 0 4px 10px rgba(0,0,0,.12);
+            transition: transform .2s;
+        }
+
+        .btn-fav.saved {
+            background: var(--terracota);
+            color: #fff;
+        }
+
+        .btn-note.saved {
+            background: var(--dourado);
+            color: #fff;
+        }
+
+        .step-num {
+            min-width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--terracota);
+            color: #fff;
+            font-weight: 700;
+            font-size: .82rem;
+            display: grid;
+            place-items: center;
+        }
+
+        .ing-check:checked + span {
+            text-decoration: line-through;
+            color: var(--suave);
+        }
+
+        /* Estilos Exclusivos da Aba 2: Alquimia da Cozinha */
+        .mol-card {
+            background: #fff;
+            border-radius: var(--raio);
+            border: 1px solid rgba(0,0,0,.06);
+            padding: 1.5rem;
+            height: 100%;
+            transition: all .3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,.04);
+        }
+
+        .mol-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--dourado);
+            box-shadow: 0 16px 32px rgba(45, 66, 52, 0.12);
+        }
+
+        .mol-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .lab-section {
+            background-color: var(--areia);
+            border-top: 1px solid rgba(217,155,38,.2);
+            border-bottom: 1px solid rgba(217,155,38,.2);
+        }
+
+        .agent-btn {
+            border-radius: 50px;
+            padding: .55rem 1.25rem;
+            font-weight: 600;
+            border: 1px solid rgba(30,32,30,.15);
+            background: #fff;
+            color: var(--texto);
+            transition: all .22s;
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+        }
+
+        .agent-btn:hover {
+            border-color: var(--terracota);
+            color: var(--terracota);
+        }
+
+        .agent-btn.active {
+            background: var(--salvia);
+            border-color: var(--salvia);
+            color: #fff;
+            box-shadow: 0 6px 16px rgba(45,66,52,.25);
+        }
+
+        .food-pill {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,.08);
+            border-radius: 12px;
+            padding: .65rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            transition: all .2s;
+            cursor: pointer;
+        }
+
+        .food-pill:hover {
+            border-color: var(--terracota);
+        }
+
+        .food-pill.active {
+            background: var(--terracota);
+            color: #fff;
+            border-color: var(--terracota);
+        }
+
+        .sense-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 1.15rem;
+            height: 100%;
+            border-top: 4px solid var(--dourado);
+            box-shadow: 0 6px 18px rgba(0,0,0,.04);
+        }
+
+        .before-after-box {
+            background: var(--creme);
+            border-radius: 12px;
+            padding: .75rem;
+            font-size: .85rem;
+        }
+
+        /* Modal & Footer */
+        .modal-custom {
+            border-radius: 20px;
+            border: none;
+            overflow: hidden;
+            background: var(--creme);
+        }
+
+        .modal-cover {
+            height: 230px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        footer {
+            background: #181c19;
+            color: #d8d4ca;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR UNIFICADA -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#" onclick="ativarAba('tab-arte')">
+                <i class="bi bi-fire text-danger"></i> Arte <span>No</span> Prato
+            </a>
+
+            <!-- Botão Lateral (Muda dinamicamente conforme a aba ativa) -->
+            <div class="d-flex align-items-center gap-2 order-lg-3">
+                <button id="btnOffcanvasArte" class="btn btn-terracota d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#chefOffcanvas">
+                    <i class="bi bi-journal-bookmark-fill"></i>
+                    <span class="d-none d-sm-inline">Caderno & Menu</span>
+                    <span id="savedBadge" class="badge rounded-pill bg-warning text-dark">0</span>
+                </button>
+
+                <button id="btnOffcanvasAlquimia" class="btn btn-terracota d-none align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#labOffcanvas">
+                    <i class="bi bi-journal-text"></i>
+                    <span class="d-none d-sm-inline">Glossário & Notas</span>
+                    <span id="savedCount" class="badge rounded-pill bg-warning text-dark">0</span>
+                </button>
+
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <!-- Menu Central com Abas Principais -->
+            <div class="collapse navbar-collapse order-lg-2" id="navMenu">
+                <div class="mx-auto my-2 my-lg-0 d-flex flex-column flex-lg-row align-items-center gap-3">
+                    <!-- Seletor Principal de Abas (Página 1 vs Página 2) -->
+                    <ul class="nav nav-pills main-tabs" id="mainSiteTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tab-arte-btn" data-bs-toggle="pill" data-bs-target="#tab-arte" type="button" role="tab" aria-selected="true">
+                                <i class="bi bi-book-half me-1"></i> Arte No Prato
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab-alquimia-btn" data-bs-toggle="pill" data-bs-target="#tab-alquimia" type="button" role="tab" aria-selected="false">
+                                <i class="bi bi-flask me-1"></i> Alquimia da Cozinha
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Sub-links da Aba 1 -->
+                    <ul class="navbar-nav flex-row gap-3" id="subNavArte">
+                        <li class="nav-item"><a class="nav-link sub-nav-link py-1" href="#inicio-arte">Início</a></li>
+                        <li class="nav-item"><a class="nav-link sub-nav-link py-1" href="#receitas">Receitas</a></li>
+                    </ul>
+
+                    <!-- Sub-links da Aba 2 -->
+                    <ul class="navbar-nav flex-row gap-3 d-none" id="subNavAlquimia">
+                        <li class="nav-item"><a class="nav-link sub-nav-link py-1" href="#anatomia">Anatomia</a></li>
+                        <li class="nav-item"><a class="nav-link sub-nav-link py-1" href="#laboratorio">Laboratório</a></li>
+                        <li class="nav-item"><a class="nav-link sub-nav-link py-1" href="#transformacoes">Antes & Depois</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTEÚDO DAS ABAS -->
+    <div class="tab-content" id="mainSiteTabsContent">
+
+        <!-- =========================================================
+             ABA 1: ARTE NO PRATO (CONTEÚDO DO INDEX 1)
+             ========================================================= -->
+        <div class="tab-pane fade show active" id="tab-arte" role="tabpanel" tabindex="0">
+
+            <!-- HERO CAROUSEL (INDEX 1) -->
+            <section id="inicio-arte" class="hero-carousel">
+                <div id="heroCarouselArte" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#heroCarouselArte" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#heroCarouselArte" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#heroCarouselArte" data-bs-slide-to="2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1600&q=85" alt="Massa Artesanal">
+                            <div class="carousel-overlay"><div class="container">
+                                <span class="hero-badge"><i class="bi bi-clock"></i> Massas • 35 min • Destaque</span>
+                                <h1 class="carousel-title">A Arte da Massa Fresca<br>Feita à Mão</h1>
+                                <p class="text-white-50 lead mb-4 col-lg-6">Tagliatelle artesanal ao ragu rústico de tomate San Marzano, azeite extravirgem e manjericão fresco.</p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="btn btn-terracota btn-lg" onclick="abrirReceita(1)"><i class="bi bi-book-half me-2"></i>Ver Receita</button>
+                                    <button class="btn btn-outline-light btn-lg rounded-pill px-4" onclick="ativarAba('tab-alquimia')"><i class="bi bi-flask me-2"></i>Ciência dos Alimentos</button>
+                                </div>
+                            </div></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=85" alt="Entrecôte na Brasa">
+                            <div class="carousel-overlay"><div class="container">
+                                <span class="hero-badge"><i class="bi bi-fire"></i> Carnes • 45 min • Chef Kelwenn Guassu</span>
+                                <h2 class="carousel-title">Cortes Nobres na Brasa<br>com Manteiga de Ervas</h2>
+                                <p class="text-white-50 lead mb-4 col-lg-6">Selagem perfeita em ferro fundido regada com manteiga aromática de alecrim, tomilho e flor de sal.</p>
+                                <button class="btn btn-terracota btn-lg" onclick="abrirReceita(2)"><i class="bi bi-book-half me-2"></i>Ver Receita</button>
+                            </div></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1600&q=85" alt="Tartelette de Frutas Vermelhas">
+                            <div class="carousel-overlay"><div class="container">
+                                <span class="hero-badge"><i class="bi bi-stars"></i> Sobremesas • 50 min • Confeitaria</span>
+                                <h2 class="carousel-title">Tartelette de Baunilha &<br>Frutas Vermelhas Frescas</h2>
+                                <p class="text-white-50 lead mb-4 col-lg-6">Massa sablée crocante recheada com creme pâtissière de fava de baunilha e frutas silvestres.</p>
+                                <button class="btn btn-terracota btn-lg" onclick="abrirReceita(3)"><i class="bi bi-book-half me-2"></i>Ver Receita</button>
+                            </div></div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarouselArte" data-bs-slide="prev"><span class="carousel-control-prev-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarouselArte" data-bs-slide="next"><span class="carousel-control-next-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+                </div>
+            </section>
+
+            <!-- CATÁLOGO DE RECEITAS -->
+            <section id="receitas" class="py-5">
+                <div class="container">
+                    <div class="row align-items-end mb-4 g-3">
+                        <div class="col-lg-6">
+                            <span class="text-uppercase fw-bold small" style="color:var(--primaria);letter-spacing:1.5px">Curadoria Gastronômica</span>
+                            <h2 class="display-5 fw-bold mb-0">Nossas Receitas</h2>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group shadow-sm rounded-pill overflow-hidden bg-white border">
+                                <span class="input-group-text bg-white border-0 ps-3 text-muted"><i class="bi bi-search"></i></span>
+                                <input type="text" id="searchInput" class="form-control border-0 shadow-none" placeholder="Buscar prato ou ingrediente...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mb-4" id="filterGroup">
+                        <button class="filter-pill active" data-cat="Todas">Todas</button>
+                        <button class="filter-pill" data-cat="Massas">🍝 Massas</button>
+                        <button class="filter-pill" data-cat="Carnes">🥩 Carnes</button>
+                        <button class="filter-pill" data-cat="Sobremesas">🍰 Sobremesas</button>
+                        <button class="filter-pill" data-cat="Vegano">🌱 Vegano</button>
+                    </div>
+
+                    <div class="row g-4" id="recipesGrid"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =========================================================
+             ABA 2: ALQUIMIA DA COZINHA (CONTEÚDO DO INDEX 2)
+             ========================================================= -->
+        <div class="tab-pane fade" id="tab-alquimia" role="tabpanel" tabindex="0">
+
+            <!-- CARROSSEL HERO (INDEX 2) -->
+            <section id="inicio-alquimia" class="hero-carousel">
+                <div id="heroCarouselAlquimia" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5500">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#heroCarouselAlquimia" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#heroCarouselAlquimia" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#heroCarouselAlquimia" data-bs-slide-to="2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=85" alt="Estrutura Molecular">
+                            <div class="carousel-overlay"><div class="container">
+                                <span class="hero-badge"><i class="bi bi-droplet-half"></i> Pilar 01 • Composição</span>
+                                <h1 class="carousel-title">A Arquitetura Invisível<br>dos Ingredientes</h1>
+                                <p class="text-white-50 lead mb-4 col-lg-6">Descubra como água, proteínas, carboidratos e lipídios se organizam dentro de cada alimento antes mesmo de tocar a panela.</p>
+                                <a href="#anatomia" class="btn btn-terracota btn-lg"><i class="bi bi-arrow-down-circle me-2"></i>Explorar Moléculas</a>
+                            </div></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=85" alt="Calor e Reação de Maillard">
+                            <div class="carousel-overlay"><div class="container">
+                                <span class="hero-badge"><i class="bi bi-fire"></i> Pilar 02 • Energia & Reações</span>
+                                <h2 class="carousel-title">Calor, Frio, Água, Ácidos<br>& Microrganismos</h2>
+                                <p class="text-white-50 lead mb-4 col-lg-6">Cinco forças fundamentais capazes de transformar moléculas inertes em explosões de cor, aroma, sabor e textura.</p>
+                                <a href="#laboratorio" class="btn btn-terracota btn-lg"><i class="bi bi-sliders me-2"></i>Abrir Laboratório</a>
+                            </div></div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=85" alt="Fermentação e Pão">
+                            <div class="carousel-overlay"><div class="container">
+                                <span class="hero-badge"><i class="bi bi-stars"></i> Pilar 03 • Metamorfose Sensorial</span>
+                                <h2 class="carousel-title">Do Alimento Cru à<br>Obra-Prima Sensorial</h2>
+                                <p class="text-white-50 lead mb-4 col-lg-6">Compare o antes e o depois de cada transformação e entenda a ciência por trás de cada mordida.</p>
+                                <a href="#transformacoes" class="btn btn-terracota btn-lg"><i class="bi bi-eye me-2"></i>Ver Transformações</a>
+                            </div></div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarouselAlquimia" data-bs-slide="prev"><span class="carousel-control-prev-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarouselAlquimia" data-bs-slide="next"><span class="carousel-control-next-icon p-3 rounded-circle bg-dark bg-opacity-50"></span></button>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 1: ANATOMIA DOS INGREDIENTES -->
+            <section id="anatomia" class="py-5">
+                <div class="container">
+                    <div class="text-center max-w-2xl mx-auto mb-5">
+                        <span class="text-uppercase fw-bold small" style="color:var(--terracota);letter-spacing:1.5px">Fundamentos Moleculares</span>
+                        <h2 class="display-5 fw-bold">Anatomia dos Ingredientes</h2>
+                        <p class="text-muted col-lg-7 mx-auto">Todo ingrediente na cozinha é formado por cinco blocos construtores. Entender como eles se comportam revela o segredo de qualquer preparo.</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="mol-card">
+                                <div class="mol-icon bg-info bg-opacity-10 text-info"><i class="bi bi-droplet-fill"></i></div>
+                                <h4 class="fw-bold">Água (H₂O)</h4>
+                                <p class="small text-muted">Representa de 60% a 95% dos alimentos frescos. Atua como solvente universal, meio de transferência de calor e regulador de suculência.</p>
+                                <span class="badge bg-light text-dark border">Ponto de ebulição: 100°C</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="mol-card">
+                                <div class="mol-icon bg-danger bg-opacity-10 text-danger"><i class="bi bi-diagram-3-fill"></i></div>
+                                <h4 class="fw-bold">Proteínas</h4>
+                                <p class="small text-muted">Longas cadeias dobradas de aminoácidos. Ao receberem calor ou ácido, desenrolam (desnaturam) e criam estruturas firmes ou redes de glúten.</p>
+                                <span class="badge bg-light text-dark border">Base da Reação de Maillard</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="mol-card">
+                                <div class="mol-icon bg-warning bg-opacity-10 text-warning"><i class="bi bi-hexagon-fill"></i></div>
+                                <h4 class="fw-bold">Carboidratos</h4>
+                                <p class="small text-muted">Dividem-se em açúcares simples (doçura e caramelização), amidos (gelatinização e espessamento) e fibras vegetais (parede celular crocante).</p>
+                                <span class="badge bg-light text-dark border">Energia & Estrutura</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="mol-card">
+                                <div class="mol-icon bg-success bg-opacity-10 text-success"><i class="bi bi-brightness-alt-high-fill"></i></div>
+                                <h4 class="fw-bold">Lipídios & Aromas</h4>
+                                <p class="small text-muted">Gorduras e óleos conduzem calor acima de 180°C, lubrificam o paladar e dissolvem compostos aromáticos voláteis responsáveis pelo perfume.</p>
+                                <span class="badge bg-light text-dark border">Veículo de Sabor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 2: LABORATÓRIO INTERATIVO DE TRANSFORMAÇÕES -->
+            <section id="laboratorio" class="lab-section py-5">
+                <div class="container">
+                    <div class="mb-4">
+                        <span class="text-uppercase fw-bold small" style="color:var(--salvia);letter-spacing:1.5px">Simulador Sensorial</span>
+                        <h2 class="display-5 fw-bold">Laboratório de Transformações</h2>
+                        <p class="text-muted">Escolha um <strong>Agente de Transformação</strong> e um <strong>Alimento</strong> para observar como as 4 dimensões sensoriais são alteradas.</p>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mb-4" id="agentButtons">
+                        <button class="agent-btn active" data-agent="Calor"><i class="bi bi-fire text-danger"></i> Calor</button>
+                        <button class="agent-btn" data-agent="Frio"><i class="bi bi-snow text-info"></i> Frio</button>
+                        <button class="agent-btn" data-agent="Água"><i class="bi bi-droplet-fill text-primary"></i> Água</button>
+                        <button class="agent-btn" data-agent="Ácidos"><i class="bi bi-brightness-low-fill text-warning"></i> Ácidos</button>
+                        <button class="agent-btn" data-agent="Microrganismos"><i class="bi bi-virus text-success"></i> Microrganismos</button>
+                    </div>
+
+                    <div class="row g-4 align-items-stretch">
+                        <div class="col-lg-4">
+                            <div class="bg-white p-4 rounded-4 shadow-sm h-100 d-flex flex-column">
+                                <h5 class="fw-bold mb-1" id="agentTitle">Agente: Calor</h5>
+                                <p class="small text-muted mb-3" id="agentSummary">Energia térmica que acelera moléculas, evapora água e ativa reações químicas de douramento.</p>
+                                <label class="small fw-bold text-uppercase text-muted mb-2">Selecione o Alimento:</label>
+                                <div class="d-flex flex-column gap-2" id="foodSelector"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8">
+                            <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm h-100">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 border-bottom pb-3 mb-4">
+                                    <div>
+                                        <span class="badge bg-danger bg-opacity-10 text-danger mb-1" id="labReactionTag">Reação Química</span>
+                                        <h3 class="fw-bold mb-0" id="labFoodHeading">Alimento</h3>
+                                    </div>
+                                    <span class="badge rounded-pill text-bg-dark px-3 py-2" id="labCondition">Condição</span>
+                                </div>
+
+                                <div class="row g-3 mb-4">
+                                    <div class="col-sm-6">
+                                        <div class="sense-box" style="border-color:#c84b31">
+                                            <h6 class="fw-bold text-danger"><i class="bi bi-emoji-smile me-1"></i> Sabor</h6>
+                                            <p class="small text-muted mb-0" id="outSabor"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="sense-box" style="border-color:#d99b26">
+                                            <h6 class="fw-bold text-warning"><i class="bi bi-palette-fill me-1"></i> Cor</h6>
+                                            <p class="small text-muted mb-0" id="outCor"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="sense-box" style="border-color:#2d4234">
+                                            <h6 class="fw-bold text-success"><i class="bi bi-wind me-1"></i> Aroma</h6>
+                                            <p class="small text-muted mb-0" id="outAroma"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="sense-box" style="border-color:#0d6efd">
+                                            <h6 class="fw-bold text-primary"><i class="bi bi-layers-fill me-1"></i> Textura</h6>
+                                            <p class="small text-muted mb-0" id="outTextura"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 rounded-3" style="background:var(--creme); border-left:4px solid var(--salvia)">
+                                    <strong class="d-block small text-uppercase text-success mb-1"><i class="bi bi-cpu me-1"></i>Explicação Molecular</strong>
+                                    <p class="small mb-0" id="outCiencia"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 3: CARDS ANTES & DEPOIS DAS TRANSFORMAÇÕES -->
+            <section id="transformacoes" class="py-5">
+                <div class="container">
+                    <div class="row align-items-end mb-4 g-3">
+                        <div class="col-lg-7">
+                            <span class="text-uppercase fw-bold small" style="color:var(--terracota);letter-spacing:1.5px">Metamorfose na Prática</span>
+                            <h2 class="display-5 fw-bold mb-0">Antes & Depois dos Alimentos</h2>
+                        </div>
+                        <div class="col-lg-5 text-lg-end">
+                            <select id="cardFilter" class="form-select rounded-pill shadow-sm d-inline-block w-auto px-4">
+                                <option value="Todos">Todos os Agentes</option>
+                                <option value="Calor">🔥 Calor</option>
+                                <option value="Frio">❄️ Frio</option>
+                                <option value="Água">💧 Água</option>
+                                <option value="Ácidos">🍋 Ácidos</option>
+                                <option value="Microrganismos">🦠 Microrganismos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-4" id="cardsGrid"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- OFFCANVAS 1: CADERNO DO CHEF (INDEX 1) -->
+    <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="chefOffcanvas">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold fs-4"><i class="bi bi-stars text-warning me-1"></i> Espaço Gourmet</h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column gap-4">
+            <div class="chef-box shadow-sm">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <img src="imagens/kelwenn.jfif" onerror="this.src='https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=150&q=80'" alt="Kelwenn Guassu" class="rounded-circle object-fit-cover border border-2 border-warning" width="54" height="54">
+                    <div>
+                        <span class="badge bg-warning text-dark mb-1">Chef Executivo</span>
+                        <h6 class="mb-0 fw-bold fs-5">Kelwenn Guassu</h6>
+                        <small class="text-white-50">Cozinha Autoral & Artesanal</small>
+                    </div>
+                </div>
+                <p class="small text-white-50 mb-0">"Cozinhar é transformar ingredientes simples em memórias ao redor da mesa."</p>
+            </div>
+
+            <div>
+                <h6 class="fw-bold text-uppercase small text-muted mb-2">Categorias</h6>
+                <div class="list-group list-group-flush rounded-3 overflow-hidden shadow-sm">
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Todas')"><span>Todas as Receitas</span><span class="badge bg-secondary rounded-pill">6</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Massas')"><span>🍝 Massas</span><span class="badge bg-light text-dark border rounded-pill">2</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Carnes')"><span>🥩 Carnes</span><span class="badge bg-light text-dark border rounded-pill">2</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Sobremesas')"><span>🍰 Sobremesas</span><span class="badge bg-light text-dark border rounded-pill">1</span></button>
+                    <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="filtrarOffcanvas('Vegano')"><span>🌱 Vegano</span><span class="badge bg-light text-dark border rounded-pill">1</span></button>
+                </div>
+            </div>
+
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="fw-bold text-uppercase small text-muted mb-0">Receitas Salvas</h6>
+                    <button id="btnClearSaved" class="btn btn-sm btn-link text-danger text-decoration-none p-0 d-none" onclick="limparSalvas()">Limpar</button>
+                </div>
+                <div id="savedList" class="d-flex flex-column gap-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OFFCANVAS 2: GLOSSÁRIO QUÍMICO & CADERNO (INDEX 2) -->
+    <div class="offcanvas offcanvas-end offcanvas-custom" tabindex="-1" id="labOffcanvas">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold fs-4"><i class="bi bi-atom text-warning me-1"></i> Enciclopédia & Notas</h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column gap-4">
+            <div class="lab-banner">
+                <span class="badge bg-warning text-dark mb-1">Ciência Gastronômica</span>
+                <h6 class="fw-bold mb-1">A Cozinha é um Laboratório Vivo</h6>
+                <p class="small text-white-50 mb-0">Cada técnica culinária reorganiza moléculas de água, proteínas, açúcares e gorduras.</p>
+            </div>
+
+            <div>
+                <h6 class="fw-bold text-uppercase small text-muted mb-2">Glossário de Reações</h6>
+                <div class="d-flex flex-column gap-2">
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Reação de Maillard (140°C+)</strong>
+                        <small class="text-muted">Reação entre aminoácidos e açúcares redutores que cria crosta dourada e centenas de aromas tostados.</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Caramelização (160°C+)</strong>
+                        <small class="text-muted">Pirólise pura dos açúcares sem proteínas, gerando notas de nozes, amargor equilibrado e cor âmbar.</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Desnaturação & Coagulação</strong>
+                        <small class="text-muted">Calor ou ácidos desenrolam proteínas espiraladas, que se religam formando redes firmes (ex: ovo cozido).</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Gelatinização do Amido</strong>
+                        <small class="text-muted">Grânulos de amido absorvem água quente, incham e espessam molhos, pães e cremes.</small>
+                    </div>
+                    <div class="glossary-card">
+                        <strong class="d-block small text-danger">Fermentação Microbiana</strong>
+                        <small class="text-muted">Leveduras e bactérias convertem açúcares em gás CO₂, ácidos orgânicos e álcoois aromáticos.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="fw-bold text-uppercase small text-muted mb-0">Estudos Salvos no Caderno</h6>
+                    <button id="clearNotesBtn" class="btn btn-sm btn-link text-danger text-decoration-none p-0 d-none" onclick="limparNotas()">Limpar</button>
+                </div>
+                <div id="notesList" class="d-flex flex-column gap-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 1: DETALHES DA RECEITA (INDEX 1) -->
+    <div class="modal fade" id="recipeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-custom shadow-lg">
+                <div class="position-relative">
+                    <img id="rImg" src="" alt="Receita" class="modal-cover">
+                    <button type="button" class="btn-close bg-white p-2 rounded-circle position-absolute top-0 end-0 m-3 shadow" data-bs-dismiss="modal"></button>
+                    <span id="rCat" class="cat-badge m-2">Categoria</span>
+                </div>
+                <div class="modal-body p-4 p-md-5">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+                        <div>
+                            <h3 id="rTitle" class="fw-bold mb-1">Título</h3>
+                            <div class="d-flex gap-3 text-muted small" id="rMeta"></div>
+                        </div>
+                        <button id="rFavBtn" class="btn btn-outline-terracota btn-sm"></button>
+                    </div>
+                    <p id="rDesc" class="text-muted mb-4"></p>
+                    <div class="row g-4">
+                        <div class="col-md-5">
+                            <div class="p-3 rounded-4 bg-white shadow-sm h-100">
+                                <h5 class="fw-bold mb-3 border-bottom pb-2"><i class="bi bi-basket2-fill text-danger me-2"></i>Ingredientes</h5>
+                                <div id="rIngredients" class="d-flex flex-column gap-2 small"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <h5 class="fw-bold mb-3 border-bottom pb-2"><i class="bi bi-list-ol text-danger me-2"></i>Modo de Preparo</h5>
+                            <div id="rSteps" class="d-flex flex-column gap-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ESTUDO CIENTÍFICO (INDEX 2) -->
+    <div class="modal fade" id="scienceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-custom shadow-lg">
+                <div class="position-relative">
+                    <img id="sImg" src="" alt="Estudo" class="modal-cover">
+                    <button type="button" class="btn-close bg-white p-2 rounded-circle position-absolute top-0 end-0 m-3 shadow" data-bs-dismiss="modal"></button>
+                    <span id="sBadge" class="agent-badge m-2">Agente</span>
+                </div>
+                <div class="modal-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+                        <div>
+                            <span class="small fw-bold text-danger text-uppercase" id="sPhenom">Fenômeno</span>
+                            <h3 id="sTitle" class="fw-bold mb-0">Título</h3>
+                        </div>
+                        <button id="sSaveBtn" class="btn btn-outline-terracota btn-sm"></button>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6"><div class="p-3 rounded-3 bg-white border h-100"><strong class="small text-muted d-block mb-1">ESTADO INICIAL (ANTES)</strong><p class="small mb-0" id="sBefore"></p></div></div>
+                        <div class="col-md-6"><div class="p-3 rounded-3 bg-white border border-warning h-100"><strong class="small text-danger d-block mb-1">ESTADO TRANSFORMADO (DEPOIS)</strong><p class="small mb-0" id="sAfter"></p></div></div>
+                    </div>
+
+                    <h6 class="fw-bold text-uppercase small text-muted mb-2">Etapas da Transformação Molecular</h6>
+                    <div id="sSteps" class="d-flex flex-column gap-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RODAPÉ UNIFICADO -->
+    <footer id="rodape" class="py-5 mt-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <a class="navbar-brand text-white d-inline-flex align-items-center gap-2 mb-2" href="#" onclick="ativarAba('tab-arte')">
+                        <i class="bi bi-fire text-danger"></i> <span class="text-white fst-normal">Arte</span> <span style="color:var(--primaria)">No</span> <span class="text-white fst-normal">Prato</span>
+                    </a>
+                    <p class="text-white-50 small mb-0 col-md-10">Inspirando apaixonados pela culinária com receitas testadas, ingredientes frescos e a ciência por trás de cada transformação.</p>
+                </div>
+                <div class="col-lg-5 text-lg-end">
+                    <div class="d-inline-flex gap-2 mb-2">
+                        <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="ativarAba('tab-arte')">Receitas</button>
+                        <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="ativarAba('tab-alquimia')">Alquimia da Cozinha</button>
+                    </div>
+                    <div class="small text-white-50">&copy; 2026 Arte No Prato & Alquimia da Cozinha.</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        /* =========================================================
+           CONTROLE DE NAVEGAÇÃO ENTRE ABAS (ARTE NO PRATO vs ALQUIMIA)
+           ========================================================= */
+        function ativarAba(tabId) {
+            const triggerEl = document.querySelector(`#${tabId}-btn`);
+            if (triggerEl) {
+                bootstrap.Tab.getOrCreateInstance(triggerEl).show();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        document.querySelectorAll('#mainSiteTabs button[data-bs-toggle="pill"]').forEach(tabBtn => {
+            tabBtn.addEventListener('shown.bs.tab', event => {
+                const isArte = event.target.id === 'tab-arte-btn';
+                document.getElementById('subNavArte').classList.toggle('d-none', !isArte);
+                document.getElementById('subNavAlquimia').classList.toggle('d-none', isArte);
+
+                document.getElementById('btnOffcanvasArte').classList.toggle('d-none', !isArte);
+                document.getElementById('btnOffcanvasArte').classList.toggle('d-flex', isArte);
+
+                document.getElementById('btnOffcanvasAlquimia').classList.toggle('d-none', isArte);
+                document.getElementById('btnOffcanvasAlquimia').classList.toggle('d-flex', !isArte);
+            });
+        });
+
+        /* =========================================================
+           LÓGICA DA ABA 1: ARTE NO PRATO (RECEITAS)
+           ========================================================= */
+        const receitas = [
+            {
+                id: 1, titulo: "Tagliatelle ao Ragu Rústico", categoria: "Massas", tempo: "35 min", dificuldade: "Médio", nota: "4.9",
+                img: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
+                desc: "Massa fresca envolvida em molho encorpado de tomates pelados italianos, alho confitado, azeite extravirgem e manjericão.",
+                ingredientes: ["400g de tagliatelle fresco artesanal", "2 latas de tomate pelado San Marzano", "4 dentes de alho laminados", "4 colheres (sopa) de azeite extravirgem", "1 maço de manjericão fresco", "80g de Parmigiano-Reggiano ralado"],
+                passos: ["Doure levemente o alho no azeite em fogo baixo.", "Adicione os tomates amassados e apure por 20 minutos.", "Cozinhe a massa al dente em água salgada.", "Misture a massa ao molho com água do cozimento, manjericão e parmesão."]
+            },
+            {
+                id: 2, titulo: "Entrecôte na Brasa com Ervas", categoria: "Carnes", tempo: "45 min", dificuldade: "Médio", nota: "5.0",
+                img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+                desc: "Corte nobre selado em alta temperatura com crosta caramelizada e regado na manteiga aromática de alecrim e tomilho.",
+                ingredientes: ["2 bifes altos de entrecôte (300g cada)", "60g de manteiga gelada", "3 ramos de alecrim e tomilho", "3 dentes de alho amassados", "Flor de sal e pimenta-do-reino"],
+                passos: ["Tempere a carne em temperatura ambiente com sal e pimenta.", "Sele em frigideira de ferro bem quente por 3 minutos de cada lado.", "Abaixe o fogo, junte manteiga, alho e ervas, regando a carne por 1 minuto.", "Descanse a carne por 5 minutos antes de fatiar."]
+            },
+            {
+                id: 3, titulo: "Tartelette de Frutas Vermelhas", categoria: "Sobremesas", tempo: "50 min", dificuldade: "Avançado", nota: "4.9",
+                img: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80",
+                desc: "Massa sablée amanteigada recheada com creme sedoso de baunilha e coroada com amoras, framboesas e mirtilos frescos.",
+                ingredientes: ["200g de farinha de trigo", "100g de manteiga gelada em cubos", "60g de açúcar e 1 gema", "400ml de leite com fava de baunilha", "4 gemas + 80g açúcar + 35g amido", "250g de frutas vermelhas frescas"],
+                passos: ["Faça uma farofa com farinha, açúcar e manteiga, una com a gema e gele 20 min.", "Forre a forma e asse a 180°C por 18 minutos.", "Cozinhe o leite aromatizado com gemas, açúcar e amido até engrossar.", "Recheie a torta fria e decore com as frutas."]
+            },
+            {
+                id: 4, titulo: "Risoto de Cogumelos Selvagens", categoria: "Massas", tempo: "40 min", dificuldade: "Médio", nota: "4.9",
+                img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=800&q=80",
+                desc: "Arroz arbóreo cozido lentamente em caldo aromático, vinho branco seco, mix de cogumelos salteados e parmesão.",
+                ingredientes: ["320g de arroz arbóreo", "300g de cogumelos frescos fatiados", "1,2L de caldo de legumes quente", "120ml de vinho branco seco", "1 cebola picada", "80g de parmesão e 40g de manteiga"],
+                passos: ["Salteie os cogumelos em fogo alto e reserve.", "Refogue a cebola, toste o arroz e deglaceie com vinho branco.", "Adicione o caldo quente aos poucos até o grão ficar al dente.", "Finalize fora do fogo com cogumelos, manteiga gelada e parmesão."]
+            },
+            {
+                id: 5, titulo: "Costela Suína Glaceada ao Mel", categoria: "Carnes", tempo: "1h 40m", dificuldade: "Fácil", nota: "4.8",
+                img: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=800&q=80",
+                desc: "Costelinha assada lentamente até desmanchar, pincelada com redução brilhante de mel silvestre, mostarda dijon e páprica.",
+                ingredientes: ["1,2kg de costelinha suína", "3 colheres (sopa) de mel", "2 colheres (sopa) de mostarda dijon", "1 colher (sopa) de páprica defumada", "Suco de 1 laranja, alho, sal e pimenta"],
+                passos: ["Tempere a costela e cubra com papel-alumínio.", "Asse a 180°C por 1 hora e 15 minutos.", "Misture mel e mostarda, pincele a carne e gratine a 220°C por 15 minutos."]
+            },
+            {
+                id: 6, titulo: "Bowl Mediterrâneo de Grão-de-Bico", categoria: "Vegano", tempo: "25 min", dificuldade: "Fácil", nota: "4.8",
+                img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80",
+                desc: "Combinação vibrante de grão-de-bico assado com especiarias, quinoa, abacate, tomate-cereja e molho cremoso de tahine.",
+                ingredientes: ["1 xícara de grão-de-bico cozido", "1 xícara de quinoa cozida", "1 abacate maduro fatiado", "150g de tomates-cereja", "2 colheres (sopa) de tahine e limão", "Azeite, cominho e páprica"],
+                passos: ["Tempere o grão-de-bico com azeite e páprica e asse por 15 minutos até ficar crocante.", "Emulsione o tahine com suco de limão, água morna e sal.", "Monte o bowl com quinoa, vegetais frescos, grão-de-bico e regue com o molho."]
+            }
+        ];
+
+        let catAtual = "Todas", busca = "", salvas = JSON.parse(localStorage.getItem("saborArteSalvas")) || [1];
+        const recipeModal = new bootstrap.Modal(document.getElementById("recipeModal"));
+
+        function renderGrid() {
+            const lista = receitas.filter(r =>
+                (catAtual === "Todas" || r.categoria === catAtual) &&
+                (r.titulo.toLowerCase().includes(busca) || r.desc.toLowerCase().includes(busca))
+            );
+            const grid = document.getElementById("recipesGrid");
+            if (!lista.length) {
+                grid.innerHTML = `<div class="col-12 text-center py-5"><p class="text-muted fs-5">Nenhuma receita encontrada.</p></div>`;
+                return;
+            }
+            grid.innerHTML = lista.map(r => {
+                const fav = salvas.includes(r.id);
+                return `
+                <div class="col-md-6 col-lg-4">
+                    <article class="recipe-card">
+                        <div class="recipe-img-box">
+                            <img src="${r.img}" alt="${r.titulo}">
+                            <span class="cat-badge">${r.categoria}</span>
+                            <button class="btn-fav ${fav ? 'saved' : ''}" onclick="toggleFav(${r.id}, event)" title="Salvar">
+                                <i class="bi ${fav ? 'bi-heart-fill' : 'bi-heart'}"></i>
+                            </button>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex gap-3 small text-muted mb-2">
+                                <span><i class="bi bi-clock text-danger"></i> ${r.tempo}</span>
+                                <span><i class="bi bi-bar-chart text-warning"></i> ${r.dificuldade}</span>
+                                <span class="ms-auto fw-bold text-dark"><i class="bi bi-star-fill text-warning"></i> ${r.nota}</span>
+                            </div>
+                            <h3 class="h5 fw-bold mb-2">${r.titulo}</h3>
+                            <p class="small text-muted flex-grow-1 mb-3">${r.desc}</p>
+                            <button class="btn btn-outline-terracota w-100" onclick="abrirReceita(${r.id})">Ver Detalhes</button>
+                        </div>
+                    </article>
+                </div>`;
+            }).join("");
+        }
+
+        function renderSalvas() {
+            document.getElementById("savedBadge").textContent = salvas.length;
+            const box = document.getElementById("savedList");
+            document.getElementById("btnClearSaved").classList.toggle("d-none", !salvas.length);
+            if (!salvas.length) {
+                box.innerHTML = `<div class="text-center p-3 bg-white rounded-3 border small text-muted">Nenhuma receita salva ainda.</div>`;
+                return;
+            }
+            box.innerHTML = receitas.filter(r => salvas.includes(r.id)).map(r => `
+                <div class="saved-item d-flex align-items-center gap-2 shadow-sm">
+                    <img src="${r.img}" class="rounded-2 object-fit-cover" width="48" height="48">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <div class="fw-bold text-truncate small" style="cursor:pointer" onclick="abrirReceita(${r.id})">${r.titulo}</div>
+                        <small class="text-muted">${r.tempo} • ${r.categoria}</small>
+                    </div>
+                    <button class="btn btn-sm text-danger" onclick="toggleFav(${r.id}, event)"><i class="bi bi-trash3"></i></button>
+                </div>`).join("");
+        }
+
+        function toggleFav(id, e) {
+            if (e) e.stopPropagation();
+            salvas = salvas.includes(id) ? salvas.filter(x => x !== id) : [...salvas, id];
+            localStorage.setItem("saborArteSalvas", JSON.stringify(salvas));
+            renderGrid(); renderSalvas();
+        }
+
+        function limparSalvas() {
+            salvas = []; localStorage.setItem("saborArteSalvas", "[]");
+            renderGrid(); renderSalvas();
+        }
+
+        function abrirReceita(id) {
+            const r = receitas.find(x => x.id === id);
+            if (!r) return;
+            document.getElementById("rImg").src = r.img;
+            document.getElementById("rCat").textContent = r.categoria;
+            document.getElementById("rTitle").textContent = r.titulo;
+            document.getElementById("rMeta").innerHTML = `<span><i class="bi bi-clock text-danger"></i> ${r.tempo}</span><span><i class="bi bi-bar-chart text-warning"></i> ${r.dificuldade}</span>`;
+            document.getElementById("rDesc").textContent = r.desc;
+            document.getElementById("rIngredients").innerHTML = r.ingredientes.map(i => `
+                <label class="d-flex align-items-center gap-2" style="cursor:pointer">
+                    <input type="checkbox" class="form-check-input ing-check m-0"><span>${i}</span>
+                </label>`).join("");
+            document.getElementById("rSteps").innerHTML = r.passos.map((p, idx) => `
+                <div class="d-flex gap-3 align-items-start"><span class="step-num">${idx + 1}</span><p class="mb-0 small">${p}</p></div>`).join("");
+
+            const btn = document.getElementById("rFavBtn");
+            const syncBtn = () => {
+                const s = salvas.includes(id);
+                btn.innerHTML = s ? `<i class="bi bi-heart-fill me-1"></i>Salva` : `<i class="bi bi-heart me-1"></i>Salvar`;
+                btn.classList.toggle("active", s);
+            };
+            syncBtn();
+            btn.onclick = () => { toggleFav(id); syncBtn(); };
+            recipeModal.show();
+        }
+
+        document.querySelectorAll(".filter-pill").forEach(btn => btn.onclick = () => {
+            document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active"); catAtual = btn.dataset.cat; renderGrid();
+        });
+
+        function filtrarOffcanvas(cat) {
+            catAtual = cat;
+            document.querySelectorAll(".filter-pill").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+            renderGrid();
+            bootstrap.Offcanvas.getInstance(document.getElementById("chefOffcanvas"))?.hide();
+            document.getElementById("receitas").scrollIntoView({ behavior: "smooth" });
+        }
+
+        document.getElementById("searchInput").oninput = e => { busca = e.target.value.toLowerCase(); renderGrid(); };
+
+        /* =========================================================
+           LÓGICA DA ABA 2: ALQUIMIA DA COZINHA (CIÊNCIA DOS ALIMENTOS)
+           ========================================================= */
+        const labData = {
+            "Calor": {
+                resumo: "Energia térmica que acelera moléculas, evapora água superficial e ativa reações de douramento.",
+                alimentos: [
+                    { nome: "🥩 Carne Bovina (Bife)", reacao: "Reação de Maillard", condicao: "150°C – 200°C", sabor: "Desenvolve notas intensas de umami, tostado e leve amargor complexo.", cor: "Passa do vermelho-rubi (mioglobina) para marrom-dourado profundo.", aroma: "Libera pirazinas e furanos — o aroma clássico de churrasco e carne assada.", textura: "Exterior crocante e selado; interior suculento se mantido entre 55°C e 60°C.", ciencia: "Acima de 140°C, aminoácidos das proteínas reagem com açúcares redutores da carne, formando melanoidinas saborosas enquanto as fibras musculares contraem." },
+                    { nome: "🥚 Ovo Inteiro", reacao: "Desnaturação & Coagulação", condicao: "62°C – 85°C", sabor: "Sabor suave e sulfuroso equilibrado (excesso de calor libera H₂S).", cor: "Clara passa de translúcida a branco opaco; gema vai de laranja líquido a amarelo cremoso.", aroma: "Notas delicadas de enxofre e lipídios aquecidos.", textura: "De líquido viscoso para gel elástico e firme.", ciencia: "O calor rompe as ligações fracas que mantêm as proteínas da clara (ovoalbumina) enroladas; elas se esticam e formam uma malha 3D que aprisiona a água." }
+                ]
+            },
+            "Frio": {
+                resumo: "Remoção de calor que desacelera enzimas e microrganismos e cristaliza água e gorduras.",
+                alimentos: [
+                    { nome: "🍨 Calda de Sorvete", reacao: "Cristalização Controlada", condicao: "-18°C com agitação", sabor: "Percepção de doçura reduzida pelo frio exige maior teor de açúcar na base.", cor: "Torna-se mais clara e opaca devido à reflexão da luz nos microcristais e ar.", aroma: "Volatilidade reduzida; aromas são liberados apenas ao derreter na boca.", textura: "Cremosa e aveludada quando congelada rapidamente sob batimento contínuo.", ciencia: "O congelamento rápido com incorporação de ar impede a formação de cristais grandes de gelo, mantendo a gordura emulsificada e a textura macia." },
+                    { nome: "🥔 Batata Cozida Resfriada", reacao: "Retrogradação do Amido", condicao: "4°C por 12 horas", sabor: "Mais neutro e levemente adocicado.", cor: "Superfície ligeiramente mais opaca e firme.", aroma: "Menor liberação de compostos terrosos voláteis.", textura: "Mais firme e estruturada, ideal para saladas sem desmanchar.", ciencia: "Ao esfriar, as cadeias de amilose do amido gelatinizado se realinham em cristais rígidos (amido resistente), aumentando a firmeza." }
+                ]
+            },
+            "Água": {
+                resumo: "Solvente essencial que hidrata proteínas, incha amidos e dissolve sabores e sais.",
+                alimentos: [
+                    { nome: "🍞 Farinha de Trigo + Água", reacao: "Hidratação & Rede de Glúten", condicao: "Hidratação 65% – 75%", sabor: "Ativa enzimas amilases que quebram amido em açúcares levemente doces.", cor: "Passa de pó branco opaco para massa creme elástica e translúcida.", aroma: "Desperta notas frescas de cereal e trigo úmido.", textura: "De pó solto para massa extensível e elástica capaz de reter gás.", ciencia: "A água une as proteínas gliadina e glutenina formando o glúten, enquanto hidrata os grânulos de amido preparando-os para o forno." },
+                    { nome: "🍚 Grão de Arroz", reacao: "Gelatinização do Amido", condicao: "Água a 80°C – 100°C", sabor: "Suave e limpo, pronto para absorver caldos e temperos.", cor: "De branco vítreo e duro para branco translúcido e brilhante.", aroma: "Libera 2-acetil-1-pirrolina, composto floral característico do arroz cozido.", textura: "De rígido e quebradiço para macio e solto.", ciencia: "A água quente penetra nos grânulos de amido, rompendo pontes de hidrogênio e fazendo o grão inchar até três vezes seu volume." }
+                ]
+            },
+            "Ácidos": {
+                resumo: "Doadores de íons H⁺ que cortam gorduras, alteram pigmentos e desnaturam proteínas a frio.",
+                alimentos: [
+                    { nome: "🐟 Peixe Branco (Ceviche)", reacao: "Desnaturação Ácida", condicao: "pH 2.5 (Suco de Limão)", sabor: "Explosão cítrica refrescante que equilibra a doçura natural do peixe.", cor: "Carne translúcida torna-se branco-opaca em poucos minutos.", aroma: "Fresco e marinho, com terpenos cítricos anulando odores de aminas.", textura: "Firme por fora e macia por dentro, simulando um cozimento sem calor.", ciencia: "Os íons de hidrogênio do ácido cítrico alteram as cargas elétricas das proteínas musculares do peixe, coagulando-as a frio." },
+                    { nome: "🥬 Repolho Roxo", reacao: "Indicador Natural de pH", condicao: "Vinagre ou Limão (pH < 4)", sabor: "Acidez vibrante que traz frescor e crocância ao prato.", cor: "Muda instantaneamente de roxo-azulado para vermelho-rubi brilhante.", aroma: "Notas limpas e avinagradas que suavizam compostos sulfurados.", textura: "Mantém a parede celular rígida e crocante.", ciencia: "As antocianinas (pigmentos vegetais) mudam sua estrutura molecular conforme o pH, refletindo luz vermelha em meio ácido." }
+                ]
+            },
+            "Microrganismos": {
+                resumo: "Leveduras e bactérias benéficas que transformam açúcares em ácidos, gases e aromas complexos.",
+                alimentos: [
+                    { nome: "🥛 Leite Integral (Iogurte/Queijo)", reacao: "Fermentação Lática", condicao: "Lactobacillus a 42°C", sabor: "Passa de doce suave para ácido lático refrescante e complexo.", cor: "Branco brilhante e homogêneo.", aroma: "Notas lácteas frescas, amanteigadas (diacetil) e levemente ácidas.", textura: "De líquido fluido para gel cremoso e encorpado.", ciencia: "Bactérias consomem a lactose e produzem ácido lático; a queda do pH faz as proteínas caseínas se unirem em uma rede cremosa." },
+                    { nome: "🥖 Massa Madre (Levain)", reacao: "Fermentação Alcoólica & Lática", condicao: "24°C – 28°C por 12h", sabor: "Acidez equilibrada, profundidade umami e maior digestibilidade.", cor: "Crosta profundamente dourada graças aos açúcares simples disponíveis.", aroma: "Complexo buquê de iogurte, frutas maduras, mel e cereal tostado.", textura: "Miolo aerado com alvéolos irregulares e casca crocante.", ciencia: "Leveduras selvagens produzem gás CO₂ (que infla a rede de glúten) enquanto lactobacilos geram ácidos acético e lático." }
+                ]
+            }
+        };
+
+        const estudos = [
+            {
+                id: 1, titulo: "Bife Selado & Reação de Maillard", agente: "Calor", fenomeno: "Reação de Maillard (140°C+)",
+                img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
+                antes: "Carne crua vermelha, fria, macia e com aroma metálico suave.",
+                depois: "Crosta marrom crocante, aroma tostado intenso e interior suculento.",
+                etapas: ["A 100°C a água superficial evapora, permitindo que a temperatura suba.", "Aos 140°C aminoácidos e açúcares se combinam formando centenas de compostos aromáticos.", "A 58°C internos as fibras mantêm os sucos retidos sem ressecar."]
+            },
+            {
+                id: 2, titulo: "Ceviche: Cozimento pelo Ácido", agente: "Ácidos", fenomeno: "Desnaturação Proteica a Frio",
+                img: "https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?auto=format&fit=crop&w=800&q=80",
+                antes: "Filé de peixe translúcido, gelatinoso e de sabor neutro.",
+                depois: "Superfície branca opaca, firmeza delicada e acidez vibrante.",
+                etapas: ["O ácido cítrico do limão reduz o pH da superfície do peixe para cerca de 2,5.", "As cargas elétricas das proteínas se neutralizam e as cadeias se desenrolam.", "As proteínas se religam formando uma malha firme sem uso de fogo."]
+            },
+            {
+                id: 3, titulo: "Pão de Fermentação Natural", agente: "Microrganismos", fenomeno: "Fermentação Mista & Gelatinização",
+                img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+                antes: "Mistura densa e pegajosa de farinha, água e sal.",
+                depois: "Pão leve com alvéolos aerados, aroma complexo e casca âmbar.",
+                etapas: ["Leveduras selvagens fermentam açúcares liberando bolhas de CO₂ presas no glúten.", "Bactérias láticas produzem ácidos orgânicos que criam sabor e conservam o pão.", "No forno, o amido gelatiniza fixando a estrutura aerada."]
+            },
+            {
+                id: 4, titulo: "Risoto & Gelatinização do Amido", agente: "Água", fenomeno: "Hidratação Gradual do Amido",
+                img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=800&q=80",
+                antes: "Grãos de arroz arbóreo secos, duros e opacos.",
+                depois: "Grãos al dente envoltos em emulsão naturalmente cremosa.",
+                etapas: ["A tostagem inicial sela levemente a superfície do grão.", "O caldo quente dissolve a amilopectina externa criando cremosidade sem creme de leite.", "A agitação libera o amido que emulsifica com a manteiga final."]
+            },
+            {
+                id: 5, titulo: "Sorvete Artesanal Cremoso", agente: "Frio", fenomeno: "Nucleação Rápida de Cristais",
+                img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80",
+                antes: "Calda líquida doce e aromática em temperatura ambiente.",
+                depois: "Estrutura aerada, sedosa e estável sem cristais ásperos.",
+                etapas: ["O resfriamento rápido abaixo de -18°C cria milhões de microcristais de gelo.", "O batimento contínuo incorpora microbolhas de ar (overrun).", "Açúcares e gorduras impedem que o gelo se funda em blocos duros."]
+            },
+            {
+                id: 6, titulo: "Caramelo Âmbar Perfumado", agente: "Calor", fenomeno: "Caramelização (Pirólise de Açúcares)",
+                img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80",
+                antes: "Cristais brancos de sacarose pura e doçura linear.",
+                depois: "Líquido dourado-âmbar com notas de nozes, manteiga e leve amargor.",
+                etapas: ["A 160°C a sacarose derrete e se quebra em glicose e frutose.", "As moléculas se fragmentam e recombinam em caramelanos e diacetil.", "O equilíbrio entre doce e amargo atinge o auge por volta de 175°C."]
+            }
+        ];
+
+        let agenteAtivo = "Calor", foodIdx = 0, notasSalvas = JSON.parse(localStorage.getItem("alquimiaNotas")) || [1];
+        const scienceModal = new bootstrap.Modal(document.getElementById("scienceModal"));
+
+        function renderLab() {
+            const data = labData[agenteAtivo];
+            document.getElementById("agentTitle").textContent = `Agente: ${agenteAtivo}`;
+            document.getElementById("agentSummary").textContent = data.resumo;
+
+            document.getElementById("foodSelector").innerHTML = data.alimentos.map((item, idx) => `
+                <button class="food-pill ${idx === foodIdx ? 'active' : ''}" onclick="selectFood(${idx})">${item.nome}</button>
+            `).join("");
+
+            const food = data.alimentos[foodIdx];
+            document.getElementById("labReactionTag").textContent = food.reacao;
+            document.getElementById("labFoodHeading").textContent = food.nome;
+            document.getElementById("labCondition").textContent = food.condicao;
+            document.getElementById("outSabor").textContent = food.sabor;
+            document.getElementById("outCor").textContent = food.cor;
+            document.getElementById("outAroma").textContent = food.aroma;
+            document.getElementById("outTextura").textContent = food.textura;
+            document.getElementById("outCiencia").textContent = food.ciencia;
+        }
+
+        function selectFood(idx) { foodIdx = idx; renderLab(); }
+
+        document.querySelectorAll(".agent-btn").forEach(btn => btn.onclick = () => {
+            document.querySelectorAll(".agent-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            agenteAtivo = btn.dataset.agent;
+            foodIdx = 0;
+            renderLab();
+        });
+
+        function renderCards() {
+            const filtro = document.getElementById("cardFilter").value;
+            const lista = estudos.filter(e => filtro === "Todos" || e.agente === filtro);
+            document.getElementById("cardsGrid").innerHTML = lista.map(e => {
+                const saved = notasSalvas.includes(e.id);
+                return `
+                <div class="col-md-6 col-lg-4">
+                    <article class="trans-card">
+                        <div class="trans-img">
+                            <img src="${e.img}" alt="${e.titulo}">
+                            <span class="agent-badge">${e.agente}</span>
+                            <button class="btn-note ${saved ? 'saved' : ''}" onclick="toggleNota(${e.id}, event)" title="Salvar no caderno">
+                                <i class="bi ${saved ? 'bi-bookmark-fill' : 'bi-bookmark'}"></i>
+                            </button>
+                        </div>
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <small class="fw-bold text-danger text-uppercase mb-1">${e.fenomeno}</small>
+                            <h3 class="h5 fw-bold mb-3">${e.titulo}</h3>
+                            <div class="before-after-box mb-3 flex-grow-1">
+                                <div class="mb-2"><strong class="text-muted">Antes:</strong> ${e.antes}</div>
+                                <div><strong class="text-success">Depois:</strong> ${e.depois}</div>
+                            </div>
+                            <button class="btn btn-outline-terracota w-100" onclick="abrirEstudo(${e.id})">Analisar Ciência</button>
+                        </div>
+                    </article>
+                </div>`;
+            }).join("");
+        }
+
+        function renderNotas() {
+            document.getElementById("savedCount").textContent = notasSalvas.length;
+            const list = document.getElementById("notesList");
+            document.getElementById("clearNotesBtn").classList.toggle("d-none", !notasSalvas.length);
+            if (!notasSalvas.length) {
+                list.innerHTML = `<div class="p-3 bg-white rounded-3 border small text-muted text-center">Nenhum estudo salvo ainda.</div>`;
+                return;
+            }
+            list.innerHTML = estudos.filter(e => notasSalvas.includes(e.id)).map(e => `
+                <div class="bg-white p-2 rounded-3 border d-flex align-items-center justify-content-between gap-2">
+                    <div class="overflow-hidden" style="cursor:pointer" onclick="abrirEstudo(${e.id})">
+                        <div class="fw-bold small text-truncate">${e.titulo}</div>
+                        <small class="text-muted">${e.agente} • ${e.fenomeno}</small>
+                    </div>
+                    <button class="btn btn-sm text-danger" onclick="toggleNota(${e.id}, event)"><i class="bi bi-trash3"></i></button>
+                </div>`).join("");
+        }
+
+        function toggleNota(id, ev) {
+            if (ev) ev.stopPropagation();
+            notasSalvas = notasSalvas.includes(id) ? notasSalvas.filter(x => x !== id) : [...notasSalvas, id];
+            localStorage.setItem("alquimiaNotas", JSON.stringify(notasSalvas));
+            renderCards(); renderNotas();
+        }
+
+        function limparNotas() {
+            notasSalvas = []; localStorage.setItem("alquimiaNotas", "[]");
+            renderCards(); renderNotas();
+        }
+
+        function abrirEstudo(id) {
+            const e = estudos.find(x => x.id === id);
+            if (!e) return;
+            document.getElementById("sImg").src = e.img;
+            document.getElementById("sBadge").textContent = e.agente;
+            document.getElementById("sPhenom").textContent = e.fenomeno;
+            document.getElementById("sTitle").textContent = e.titulo;
+            document.getElementById("sBefore").textContent = e.antes;
+            document.getElementById("sAfter").textContent = e.depois;
+            document.getElementById("sSteps").innerHTML = e.etapas.map((step, i) => `
+                <div class="p-2 px-3 bg-white rounded-3 border d-flex gap-2 align-items-center small">
+                    <span class="badge rounded-pill bg-danger">${i + 1}</span><span>${step}</span>
+                </div>`).join("");
+
+            const btn = document.getElementById("sSaveBtn");
+            const updateBtn = () => {
+                const s = notasSalvas.includes(id);
+                btn.innerHTML = s ? `<i class="bi bi-bookmark-fill me-1"></i>Salvo` : `<i class="bi bi-bookmark me-1"></i>Salvar Estudo`;
+                btn.classList.toggle("active", s);
+            };
+            updateBtn();
+            btn.onclick = () => { toggleNota(id); updateBtn(); };
+            scienceModal.show();
+        }
+
+        document.getElementById("cardFilter").onchange = renderCards;
+
+        // Inicialização de ambas as abas
+        renderGrid();
+        renderSalvas();
+        renderLab();
+        renderCards();
+        renderNotas();
+    </script>
+</body>
+</html>
